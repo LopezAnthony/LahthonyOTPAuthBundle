@@ -16,6 +16,7 @@ class OTPManager
 
     public function __construct($period, $digestAlgo, $digit, $issuer, $image)
     {
+        // TODO: use option resolver?
         $this->period = $period;
         $this->digestAlgo = $digestAlgo;
         $this->digit = $digit;
