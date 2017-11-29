@@ -6,17 +6,22 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\Common\EventSubscriber;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
+use LahthonyOTPAuthBundle\Service\TwigMailGenerator;
 
 class RegisterOTPAuthKeySubscriber implements EventSubscriber
 {
 
-    private $mailer;
+    private $mailGenerator;
     private $OTPManager;
+    private $mailer;
+    private $sender;
 
-    public function __construct(\Swift_Mailer $mailer, OTPManager $OTPManager)
+    public function __construct($sender ,TwigMailGenerator $mailGenerator, \Swift_Mailer $mailer, OTPManager $OTPManager)
     {
-        $this->mailer = $mailer;
+        $this->mailGenerator = $mailGenerator;
         $this->OTPManager = $OTPManager;
+        $this->mailer = $mailer;
+        $this->sender = $sender;
     }
 
     public function prePersist(LifecycleEventArgs $args)
@@ -53,16 +58,13 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
     public function sendMessage($object, $subject)
     {
         $totp = $this->OTPManager->getOTPClient($object);
-
         $userEmail = $object->getEmail();
-        $message = (new \Swift_Message($subject))
-            ->setFrom('admin@gmail.com')
-            ->setTo($userEmail)
-            ->setBody('<img src="' . $totp->getQrCodeUri(). '">', 'text/html')
-        ;
-
+        $message = $this->mailGenerator->getMessage($totp->getQrCodeUri());
+        $message->setFrom($this->sender);
+        $message->setTo($userEmail);
+        dump($message);
+        die();
         $this->mailer->send($message);
-
     }
 
     public function getSubscribedEvents()
