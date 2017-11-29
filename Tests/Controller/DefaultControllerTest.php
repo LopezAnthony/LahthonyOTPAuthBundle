@@ -2,9 +2,9 @@
 
 namespace LahthonyOTPAuthBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+//use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class DefaultControllerTest
 {
     public function testIndex()
     {
