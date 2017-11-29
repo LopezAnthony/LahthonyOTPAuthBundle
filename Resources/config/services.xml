@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!--
+    <services>
+        <service id="lahthony_otp_auth.example" class="LahthonyOTPAuthBundle\Example">
+            <argument type="service" id="service_id" />
+            <argument>plain_value</argument>
+            <argument>%parameter_name%</argument>
+        </service>
+    </services>
+    -->
+    <services>
+        <!-- Default configuration for services in *this* file -->
+        <defaults autowire="true" autoconfigure="true" public="false" />
+
+        <!-- Load services from whatever directories you want (you can update this!) -->
+        <prototype namespace="LahthonyOTPAuthBundle\" resource="../../../../src/LahthonyOTPAuthBundle/*" exclude="../../../../src/LahthonyOTPAuthBundle/Manager/OTPManager.php"/>
+        <service id="lahthony_otp_auth.otp_manager" class="LahthonyOTPAuthBundle\Manager\OTPManager">
+            <argument></argument>
+            <argument></argument>
+            <argument></argument>
+            <argument></argument>
+            <argument></argument>
+        </service>
+        <service id="LahthonyOTPAuthBundle\EventListener\RegisterOTPAuthKeySubscriber">
+            <tag name="doctrine.event_subscriber" connection="default" />
+        </service>
+    </services>
+</container>
