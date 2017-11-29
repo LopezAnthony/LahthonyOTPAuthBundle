@@ -26,6 +26,11 @@ class OTPManager
 
     public function getOTPClient(OTPAuthInterface $user)
     {
+        if(null === $user->getSecretAuthKey())
+        {
+            return;
+        }
+
         $totp = TOTP::create(
             $user->getSecretAuthKey(),
             $this->period,
@@ -33,7 +38,7 @@ class OTPManager
             $this->digit
         );
 
-        (method_exists($user, 'getEmail')) ? $totp->setLabel($user->getEmail()) : $totp->setLabel($user->getUsername());
+        (method_exists($user, 'getEmail')) ? $totp->setLabel($user->getEmail()) : $totp->setLabel('');
 
         $totp->setIssuer($this->issuer);
         $totp->setParameter('image', $this->image);
