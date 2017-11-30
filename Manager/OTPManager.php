@@ -6,6 +6,7 @@ use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use OTPHP\TOTP;
 use ParagonIE\ConstantTime\Base32;
 
+
 /**
  * Class OTPManager
  * @package LahthonyOTPAuthBundle\Manager

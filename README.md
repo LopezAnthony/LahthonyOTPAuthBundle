@@ -1,6 +1,8 @@
 Installation
 ============
 
+[![Build Status](https://travis-ci.org/LopezAnthony/LahthonyOTPAuthBundle.svg?branch=featureCI)](https://travis-ci.org/LopezAnthony/LahthonyOTPAuthBundle)
+
 Step 1: Download the Bundle
 ---------------------------
 
