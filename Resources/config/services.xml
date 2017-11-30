@@ -30,5 +30,9 @@
             <argument></argument>
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
+        <service id="LahthonyOTPAuthBundle\EventListener\LoginEventListener">
+            <argument></argument>
+            <tag name="kernel.event_listener" event="security.interactive_login" method="onAuthenticationSuccess" connection="default" />
+        </service>
     </services>
 </container>
