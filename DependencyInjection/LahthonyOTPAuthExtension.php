@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Loader;
 class LahthonyOTPAuthExtension extends Extension
 {
     /**
-     * {@inheritdoc}
+     * @Todo refactor methods less than 20 lines
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -31,6 +31,9 @@ class LahthonyOTPAuthExtension extends Extension
         $def->replaceArgument(2, $config['digit']);
         $def->replaceArgument(3, $config['issuer']);
         $def->replaceArgument(4, $config['image']);
+
+        $subDef = $container->getDefinition('LahthonyOTPAuthBundle\EventListener\RegisterOTPAuthKeySubscriber');
+        $subDef->replaceArgument(0, $config['sender_address']);
     }
 
     public function getNamespace()

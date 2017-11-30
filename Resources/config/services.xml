@@ -27,6 +27,7 @@
             <argument></argument>
         </service>
         <service id="LahthonyOTPAuthBundle\EventListener\RegisterOTPAuthKeySubscriber">
+            <argument></argument>
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
     </services>
