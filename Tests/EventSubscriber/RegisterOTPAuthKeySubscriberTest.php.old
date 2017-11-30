@@ -1,8 +1,12 @@
 <?php
 
+namespace LahthonyOTPAuthBundle\Tests\EventSubscriber;
+
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use LahthonyOTPAuthBundle\EventListener\RegisterOTPAuthKeySubscriber;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
+use LahthonyOTPAuthBundle\Service\TwigMailGenerator;
+use LahthonyOTPAuthBundle\Tests\Swift_Mailer;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -39,8 +43,9 @@ class RegisterOTPAuthKeySubscriberTest extends TestCase
     {
         $mailer = $this->createMock(Swift_Mailer::class);
         $otpManager = $this->createMock(OTPManager::class);
+        $mailGenerator = $this->createMock(TwigMailGenerator::class);
 
-        $this->RegisterOTPAuthKeySubscriber = new RegisterOTPAuthKeySubscriber($mailer, $otpManager);
+        $this->RegisterOTPAuthKeySubscriber = new RegisterOTPAuthKeySubscriber('mail@mail.fr', $mailGenerator, $mailer, $otpManager);
 
         $this->arg = $this->createMock(LifecycleEventArgs::class);
         $this->mailer = $mailer;
