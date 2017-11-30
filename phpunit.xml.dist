@@ -5,7 +5,7 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.8/phpunit.xsd"
          backupGlobals="false"
          colors="true"
-         bootstrap="../../vendor/autoload.php"
+         bootstrap="./vendor/autoload.php"
 >
     <php>
         <ini name="error_reporting" value="-1" />
@@ -19,12 +19,15 @@
     </testsuites>
 
     <filter>
-        <whitelist>
-            <directory>src</directory>
-            <exclude>
-                <directory>./Resources</directory>
-                <directory>./vendor</directory>
-            </exclude>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <!--<directory suffix=".php">./</directory>-->
+            <directory suffix=".php">./Manager</directory>
+            <directory suffix=".php">./Service</directory>
+            <!--<exclude>-->
+                <!--<directory>./Resources</directory>-->
+                <!--<directory>./Tests</directory>-->
+                <!--<directory>./vendor</directory>-->
+            <!--</exclude>-->
         </whitelist>
     </filter>
 </phpunit>

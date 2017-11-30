@@ -22,11 +22,11 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
         if (!$user || null === $user->getId()) {
             $form->add('OTP2Auth', ChoiceType::class,
                 array(
-                    'choices'  => array(
+                    'choices' => array(
                         'No' => false,
                         'Yes' => true,
                     ),
-                    'mapped' => true
+                    'mapped' => true,
                 )
             );
         }
