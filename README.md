@@ -2,6 +2,8 @@ Installation
 ============
 
 [![Build Status](https://travis-ci.org/LopezAnthony/LahthonyOTPAuthBundle.svg?branch=featureCI)](https://travis-ci.org/LopezAnthony/LahthonyOTPAuthBundle)
+[![StyleCI](https://styleci.io/repos/112461062/shield?branch=featureCI)](https://styleci.io/repos/112461062)
+[![Coverage Status](https://coveralls.io/repos/github/LopezAnthony/LahthonyOTPAuthBundle/badge.svg?branch=master)](https://coveralls.io/github/LopezAnthony/LahthonyOTPAuthBundle?branch=master)
 
 Step 1: Download the Bundle
 ---------------------------

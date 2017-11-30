@@ -8,4 +8,7 @@ install:
   - composer install
 
 script:
-  - phpunit --colors --coverage-text
+  - phpunit --colors --coverage-text --coverage-clover build/logs/clover.xml
+
+after_success:
+  - travis_retry php vendor/bin/coveralls
