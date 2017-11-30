@@ -11,6 +11,7 @@ namespace LahthonyOTPAuthBundle\Tests\Manager;
 
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
+
 use OTPHP\TOTP;
 use PHPUnit\Framework\TestCase;
 
