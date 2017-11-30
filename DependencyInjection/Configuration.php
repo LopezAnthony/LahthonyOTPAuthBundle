@@ -43,8 +43,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('sender_address')
                     ->defaultValue('2factorAuth@gmail.com')
-                ->end()
-        ;
+                ->end();
 
         return $treeBuilder;
     }
