@@ -62,8 +62,6 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
         $message = $this->mailGenerator->getMessage($totp->getQrCodeUri());
         $message->setFrom($this->sender);
         $message->setTo($userEmail);
-        dump($message);
-        die();
         $this->mailer->send($message);
     }
 
