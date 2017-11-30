@@ -9,9 +9,8 @@ use PHPUnit\Framework\TestCase;
  * Created by PhpStorm.
  * User: Etudiant
  * Date: 29/11/2017
- * Time: 15:29
+ * Time: 15:29.
  */
-
 class RegisterOTPAuthKeySubscriberTest extends TestCase
 {
     /**
@@ -33,7 +32,6 @@ class RegisterOTPAuthKeySubscriberTest extends TestCase
      * @var LifecycleEventArgs
      */
     private $arg;
-
 
     protected function setUp()
     {
@@ -59,13 +57,11 @@ class RegisterOTPAuthKeySubscriberTest extends TestCase
         $object
             ->expects($this->once())
             ->method('getOtp2auth')
-            ->willReturn(false)
-        ;
+            ->willReturn(false);
 
         $this->arg
             ->method('getObject')
-            ->willReturn($object)
-        ;
+            ->willReturn($object);
 
         $result = $this->RegisterOTPAuthKeySubscriber->prePersist($this->arg);
         $this->assertNull($result);

@@ -2,16 +2,16 @@
 
 namespace LahthonyOTPAuthBundle\EventListener;
 
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class Add2FactorAuthFieldListener implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
-        return array(FormEvents::PRE_SET_DATA => 'preSetData');
+        return [FormEvents::PRE_SET_DATA => 'preSetData'];
     }
 
     public function preSetData(FormEvent $event)
@@ -21,13 +21,13 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
 
         if (!$user || null === $user->getId()) {
             $form->add('OTP2Auth', ChoiceType::class,
-                array(
-                    'choices'  => array(
-                        'No' => false,
+                [
+                    'choices'  => [
+                        'No'  => false,
                         'Yes' => true,
-                    ),
-                    'mapped' => true
-                )
+                    ],
+                    'mapped' => true,
+                ]
             );
         }
     }
