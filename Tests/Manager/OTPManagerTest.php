@@ -3,15 +3,13 @@
  * Created by PhpStorm.
  * User: Etudiant
  * Date: 29/11/2017
- * Time: 13:22
+ * Time: 13:22.
  */
 
 namespace LahthonyOTPAuthBundle\Tests\Manager;
 
-
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
-
 use OTPHP\TOTP;
 use PHPUnit\Framework\TestCase;
 
@@ -24,7 +22,7 @@ class OTPManagerTest extends TestCase
 
     protected function setUp()
     {
-        $this->OTPManager = new OTPManager(30,'sha1', 6, '', '');
+        $this->OTPManager = new OTPManager(30, 'sha1', 6, '', '');
     }
 
     public function testGetOTPClient()

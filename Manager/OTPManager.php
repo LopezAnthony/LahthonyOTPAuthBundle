@@ -6,10 +6,8 @@ use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use OTPHP\TOTP;
 use ParagonIE\ConstantTime\Base32;
 
-
 /**
- * Class OTPManager
- * @package LahthonyOTPAuthBundle\Manager
+ * Class OTPManager.
  */
 class OTPManager
 {
@@ -24,7 +22,7 @@ class OTPManager
     private $digestAlgo;
 
     /**
-     * @var integer
+     * @var int
      */
     private $digit;
 
@@ -49,15 +47,15 @@ class OTPManager
     }
 
     /**
-     * Initialize and return a instance of TOTP
+     * Initialize and return a instance of TOTP.
      *
      * @param OTPAuthInterface $user
+     *
      * @return TOTP|void
      */
     public function getOTPClient(OTPAuthInterface $user)
     {
-        if(null === $user->getSecretAuthKey())
-        {
+        if (null === $user->getSecretAuthKey()) {
             return;
         }
 
@@ -77,13 +75,14 @@ class OTPManager
     }
 
     /**
-     * generate secret key base 32
+     * generate secret key base 32.
      *
      * @return string
      */
     public function generateSecretKey()
     {
         $mySecret = trim(Base32::encodeUpper(random_bytes(128)), '=');
+
         return $mySecret;
     }
 }
