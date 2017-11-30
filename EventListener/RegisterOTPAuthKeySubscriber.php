@@ -2,21 +2,20 @@
 
 namespace LahthonyOTPAuthBundle\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use LahthonyOTPAuthBundle\Service\TwigMailGenerator;
 
 class RegisterOTPAuthKeySubscriber implements EventSubscriber
 {
-
     private $mailGenerator;
     private $OTPManager;
     private $mailer;
     private $sender;
 
-    public function __construct($sender ,TwigMailGenerator $mailGenerator, \Swift_Mailer $mailer, OTPManager $OTPManager)
+    public function __construct($sender, TwigMailGenerator $mailGenerator, \Swift_Mailer $mailer, OTPManager $OTPManager)
     {
         $this->mailGenerator = $mailGenerator;
         $this->OTPManager = $OTPManager;
@@ -26,19 +25,16 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
 
     public function prePersist(LifecycleEventArgs $args)
     {
-
         $object = $args->getObject();
 
-
-        /**
+        /*
          * will execute only if instance of OTPAuthInterface
          */
         if (!$object instanceof OTPAuthInterface) {
             return;
         }
 
-
-        /**
+        /*
          * If the user doesn't accept the 2 factor authentication
          * stop execution
          */
@@ -46,11 +42,10 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
             return;
         }
 
-
         if (null === $object->getSecretAuthKey()) {
-            #generate secret key register in DB table user
+            //generate secret key register in DB table user
             $object->setSecretAuthKey($this->OTPManager->generateSecretKey());
-            #sendmail with qrcode
+            //sendmail with qrcode
             $this->sendMessage($object, '2Factor.');
         }
     }
@@ -67,8 +62,8 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
 
     public function getSubscribedEvents()
     {
-        return array(
-            'prePersist'
-        );
+        return [
+            'prePersist',
+        ];
     }
 }
