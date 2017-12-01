@@ -93,7 +93,7 @@ class User implements OTPAuthInterface
         
 }
 ```
-**After that DO NOT FORGET to schema update:**
+:warning: **After that DO NOT FORGET to schema update:** :warning:
 
 ```console
 $ php bin/console doctrine:schema:update --force
