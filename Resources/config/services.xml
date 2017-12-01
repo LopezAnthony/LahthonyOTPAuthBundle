@@ -19,7 +19,7 @@
 
         <!-- Load services from whatever directories you want (you can update this!) -->
         <prototype namespace="LahthonyOTPAuthBundle\" resource="../../../../lahthony/otp-auth-bundle/*" exclude="../../../../lahthony/otp-auth-bundle/{Manager/OTPManager.php, Entity, Repository,Tests}"/>
-        <service id="lahthony_otp_auth.otp_manager" class="LahthonyOTPAuthBundle\Manager\OTPManager">
+        <service id="LahthonyOTPAuthBundle\Manager\OTPManager">
             <argument></argument>
             <argument></argument>
             <argument></argument>
