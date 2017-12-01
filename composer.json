@@ -1,5 +1,5 @@
 {
-    "name": " lahthony/otp-auth-bundle",
+    "name": "lahthony/otp-auth-bundle",
     "type": "symfony-bundle",
     "description": "TOTP authentification",
     "homepage": "https://github.com/LopezAnthony/LahthonyOTPAuthBundle",
