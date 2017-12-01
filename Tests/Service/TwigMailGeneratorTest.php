@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Etudiant
  * Date: 01/12/2017
- * Time: 16:50
+ * Time: 16:50.
  */
 
 namespace LahthonyOTPAuthBundle\Tests\Service;

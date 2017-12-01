@@ -4,10 +4,11 @@ namespace LahthonyOTPAuthBundle\Tests;
 
 use Doctrine\ORM\Mapping as ORM;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
+
 //use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * TestUser
+ * TestUser.
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -51,12 +52,12 @@ class TestUser implements OTPAuthInterface
     private $secretAuthKey;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $OTP2Auth;
 
     /**
-     * Get id
+     * Get id.
      *
      * @return int
      */
@@ -74,7 +75,7 @@ class TestUser implements OTPAuthInterface
     }
 
     /**
-     * Set username
+     * Set username.
      *
      * @param string $username
      *
@@ -88,7 +89,7 @@ class TestUser implements OTPAuthInterface
     }
 
     /**
-     * Get username
+     * Get username.
      *
      * @return string
      */
@@ -98,7 +99,7 @@ class TestUser implements OTPAuthInterface
     }
 
     /**
-     * Set password
+     * Set password.
      *
      * @param string $password
      *
@@ -112,7 +113,7 @@ class TestUser implements OTPAuthInterface
     }
 
     /**
-     * Get password
+     * Get password.
      *
      * @return string
      */
@@ -122,7 +123,7 @@ class TestUser implements OTPAuthInterface
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param string $email
      *
@@ -136,7 +137,7 @@ class TestUser implements OTPAuthInterface
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return string
      */
@@ -184,7 +185,4 @@ class TestUser implements OTPAuthInterface
     {
         return $this->secretAuthKey;
     }
-
-
 }
-

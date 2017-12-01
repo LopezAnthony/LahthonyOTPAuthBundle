@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Etudiant
  * Date: 01/12/2017
- * Time: 15:02
+ * Time: 15:02.
  */
 
 namespace LahthonyOTPAuthBundle\Tests\EventListener;
