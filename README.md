@@ -21,7 +21,7 @@ Open a command console, enter your project directory and execute the
 following command to download the latest stable version of this bundle:
 
 ```console
-$ composer require LahtonyOTPAuthBundle
+$ composer require lahthony/otp-auth-bundle
 ```
 
 This command requires you to have Composer installed globally, as explained
@@ -58,7 +58,9 @@ class AppKernel extends Kernel
 Step 3: Implements OTPAuthInterface
 -------------------------
 
-You need to implement the OTPAuthInterface on your User Entity commonly present in `src/AppBundle/Entity/User`.
+You need to implement the OTPAuthInterface on your User Entity commonly present in `src/AppBundle/Entity/User`. 
+
+:warning: **Do not forget to generate getter setter.** :warning:
 
 ```php
 <?php
@@ -82,18 +84,21 @@ class User implements OTPAuthInterface
      */
     private $OTP2Auth;
   
-    //5 methods to define
-    public function getOTP2Auth(){}
-    public function setOTP2Auth($otp2auth){}
-    
-    public function getSecretAuthKey(){}
-    public function setSecretAuthKey($secretAuthKey){}
+    /**
+     * DO NOT FORGET TO GENERATE GETTER AND SETTER FOR THESE TWO ATTRIBUTES 
+     */
     
     //We'll need an email to send a qrcode to users
     public function getEmail(){}
         
 }
 ```
+**After that DO NOT FORGET to schema update:**
+
+```console
+$ php bin/console doctrine:schema:update --force
+```
+
 
 Step 4: Add on field to your `UserFormType`
 -------------------------
@@ -115,7 +120,7 @@ class UserType
     {
         $builder
             //...
-            ->addEventSubscriber(new Add2FactorAuthFieldListener());
+            ->addEventSubscriber(new Add2FactorAuthFieldListener())
         ;
     }
     //...
@@ -128,7 +133,7 @@ You need now to add one field one your login form.
 ```html
 <form>
 
-    <label for="otp">Code OTP</label>
+    <label for="otp">Code OTP(optionnal if you haven't accept 2factorAuth)</label>
     <input type="text" name="otp">
     
 </form>
