@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: Etudiant
  * Date: 01/12/2017
- * Time: 13:01
+ * Time: 13:01.
  */
 
 namespace LahthonyOTPAuthBundle\Tests\EventListener;
-
 
 use LahthonyOTPAuthBundle\EventListener\Add2FactorAuthFieldListener;
 use LahthonyOTPAuthBundle\Tests\TestUser;
@@ -18,7 +17,6 @@ use Symfony\Component\Form\FormEvent;
 
 class Add2FactorAuthFieldListenerTest extends TestCase
 {
-
     /**
      * @var
      */
@@ -28,7 +26,6 @@ class Add2FactorAuthFieldListenerTest extends TestCase
      * @var
      */
     private $event;
-
 
     public function setUp()
     {
