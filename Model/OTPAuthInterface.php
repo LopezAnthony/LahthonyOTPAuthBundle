@@ -50,4 +50,6 @@ interface OTPAuthInterface
      *                </code>
      */
     public function getSecretAuthKey();
+
+    public function getEmail();
 }
