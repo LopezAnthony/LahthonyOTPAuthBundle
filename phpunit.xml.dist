@@ -28,7 +28,7 @@
                 <directory>./Tests</directory>
                 <directory>./vendor</directory>
                 <!--<directory>./DependencyInjection</directory>-->
-                <!--<directory>./Controller</directory>-->
+                <directory>./Controller</directory>
             </exclude>
         </whitelist>
     </filter>

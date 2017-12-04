@@ -1,24 +1,32 @@
 {
     "name": "lahthony/otp-auth-bundle",
     "type": "symfony-bundle",
+    "description": "TOTP authentification",
+    "homepage": "https://github.com/LopezAnthony/LahthonyOTPAuthBundle",
     "license": "MIT",
+    "version": "1.0.0",
     "authors": [
         {
             "name": "Lahcen",
             "email": "larson920@gmail.com"
         },
         {
-            "name": "Anthony"
+            "name": "Anthony",
+            "email": "anthonylopezwebdev@gmail.com"
         }
     ],
     "require": {
+        "php": "^5.5.9 || ^7.0",
+        "symfony/form": "^2.8 || ^3.0",
+        "symfony/framework-bundle": "^2.8 || ^3.0",
+        "symfony/security-bundle": "^2.8 || ^3.0",
+        "symfony/twig-bundle": "^2.8 || ^3.0",
+        "twig/twig": "^1.28 || ^2.0",
+        "symfony/templating": "^2.8 || ^3.0",
         "spomky-labs/otphp": "^9.0",
-        "symfony/framework-bundle": "^3.0",
         "swiftmailer/swiftmailer": "^6.0",
         "doctrine/doctrine-bundle": "^1.8",
-        "doctrine/orm": "^2.5",
-        "symfony/form": "^4.0",
-        "symfony/security": "^4.0"
+        "doctrine/orm": "^2.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.4",
