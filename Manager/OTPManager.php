@@ -5,6 +5,7 @@ namespace LahthonyOTPAuthBundle\Manager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use OTPHP\TOTP;
 use ParagonIE\ConstantTime\Base32;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
  * Class OTPManager.
@@ -35,8 +36,12 @@ class OTPManager
      * @var string
      */
     private $image;
+    /**
+     * @var FlashBagInterface
+     */
+    private $flashBag;
 
-    public function __construct($period, $digestAlgo, $digit, $issuer, $image)
+    public function __construct($period, $digestAlgo, $digit, $issuer, $image, FlashBagInterface $flashBag)
     {
         // TODO: use option resolver?
         $this->period = $period;
@@ -44,6 +49,7 @@ class OTPManager
         $this->digit = $digit;
         $this->issuer = $issuer;
         $this->image = $image;
+        $this->flashBag = $flashBag;
     }
 
     /**
@@ -94,6 +100,21 @@ class OTPManager
         return array(
             "secret" => $secret,
             "recoveryKey" => $recoveryKey
+        );
+    }
+
+    public function generateFlash($recoveryKey, $authKey, $qrCodeUri)
+    {
+        $this->flashBag->add('2factor',
+            "<div>
+                <p>Please make sure to write down the following code (you'll need it if you lose your device) : <span> $recoveryKey </span></p>
+            
+                <p>To use your 2factor authenticator you'll need google authenticator or any app like so.</p>
+                <p>you can download it <a href=\"https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=fr\">Here</a> for playstore.</p> 
+                <p>Then all you need is to scan the following qrcode or enter the authentication key in your app.</p>
+                <p>Secret Authentication Key : $authKey </p>
+                <p>QRCode: <img src=\"$qrCodeUri\"></p>
+            </div>"
         );
     }
 }

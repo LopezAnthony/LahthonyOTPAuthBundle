@@ -44,10 +44,16 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
 
         if (null === $object->getSecretAuthKey()) {
             //generate secret key register in DB table user
-            $object->setSecretAuthKey($this->OTPManager->generateSecretKey());
+            $authKey =  $this->OTPManager->generateSecretKey();
+            $object->setSecretAuthKey($authKey);
+
             //generate recovery key + secret pass for user
             $recoveryKey = $this->OTPManager->generateRecoveryKey($object);
+            $object->setRecoveryKey($recoveryKey["recoveryKey"]);
 
+            //Get the QRCode to display in the flash message
+            $totp = $this->OTPManager->getOTPClient($object);
+            $QRCode = $totp->getQrCodeUri();
             /**
              * @TODO reset secretAuthKey with recovery key
              * if(hash_compare((hash_hashmac($user->getEmail(),$user->getSecretAuthKey, $secret)), $user->getRecoveryKey()){
@@ -55,7 +61,8 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
              * }
              */
 
-            $object->setRecoveryKey($recoveryKey["recoveryKey"]);
+
+            $this->OTPManager->generateFlash($recoveryKey['secret'], $authKey, $QRCode);
             //sendmail with qrcode
             $this->sendMessage($object, '2Factor.');
         }
