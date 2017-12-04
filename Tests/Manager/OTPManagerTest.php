@@ -12,6 +12,7 @@ use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use OTPHP\TOTP;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class OTPManagerTest extends TestCase
 {
@@ -20,9 +21,15 @@ class OTPManagerTest extends TestCase
      */
     private $OTPManager;
 
+    /**
+     * @var FlashBagInterface
+     */
+    private $flashBag;
+
     protected function setUp()
     {
-        $this->OTPManager = new OTPManager(30, 'sha1', 6, '', '');
+        $this->flashBag = $this->createMock(FlashBagInterface::class);
+        $this->OTPManager = new OTPManager(30, 'sha1', 6, '', '', $this->flashBag);
     }
 
     public function testGetOTPClient()
