@@ -105,7 +105,7 @@ class OTPManager
 
     public function generateFlash($recoveryKey, $authKey, $qrCodeUri)
     {
-        $this->flashBag->add('2factor',
+        return $this->flashBag->add('2factor',
             "<div>
                 <p>To use your 2factor authenticator you'll need google authenticator or any app like so.</p>
                 <p>You can download it <a href=\"https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=fr\">Here</a> for playstore.</p> 
