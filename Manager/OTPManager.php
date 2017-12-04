@@ -85,4 +85,15 @@ class OTPManager
 
         return $mySecret;
     }
+
+    public function generateRecoveryKey(OTPAuthInterface $user)
+    {
+        $secret = trim(Base32::encodeUpper(random_bytes(6)), '=');
+        $recoveryKey = hash_hmac($user->getEmail(), $user->getSecretAuthKey(), $secret);
+
+        return array(
+            "secret" => $secret,
+            "recoveryKey" => $recoveryKey
+        );
+    }
 }
