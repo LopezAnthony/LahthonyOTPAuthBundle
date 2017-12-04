@@ -4,7 +4,7 @@ namespace LahthonyOTPAuthBundle\Model;
 
 /**
  * While implement this interface add a
- * private $secretAuthKey to the User Entity.
+ * private $secretAuthKey to the TestUser Entity.
  *
  * Interface OTPAuthInterface
  */

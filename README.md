@@ -64,7 +64,7 @@ You need to implement the OTPAuthInterface on your User Entity commonly present 
 
 ```php
 <?php
-//src/AppBundle/Entity/User
+UserTest
 
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 //...
