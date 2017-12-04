@@ -53,6 +53,9 @@ class Add2FactorAuthFieldListenerTest extends TestCase
                         'Yes' => true,
                     ),
                     'mapped' => true,
+                   'attr' => [
+                       'class' => 'browser-default',
+                   ],
                 ])
             );
 
