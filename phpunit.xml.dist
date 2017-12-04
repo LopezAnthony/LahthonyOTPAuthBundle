@@ -13,21 +13,23 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="LahthonyOTPAuthBundle Test Suite">
             <directory>Tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <!--<directory suffix=".php">./</directory>-->
-            <directory suffix=".php">./Manager</directory>
-            <directory suffix=".php">./Service</directory>
-            <!--<exclude>-->
-                <!--<directory>./Resources</directory>-->
-                <!--<directory>./Tests</directory>-->
-                <!--<directory>./vendor</directory>-->
-            <!--</exclude>-->
+            <directory suffix=".php">./</directory>
+            <!--<directory suffix=".php">./Manager</directory>-->
+            <!--<directory suffix=".php">./Service</directory>-->
+            <exclude>
+                <directory>./Resources</directory>
+                <directory>./Tests</directory>
+                <directory>./vendor</directory>
+                <!--<directory>./DependencyInjection</directory>-->
+                <directory>./Controller</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
