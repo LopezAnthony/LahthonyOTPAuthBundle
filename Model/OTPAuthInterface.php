@@ -73,6 +73,7 @@ interface OTPAuthInterface
      *                }
      *                </code>
      */
-    public function getRecovryKey();
+    public function getRecoveryKey();
+
     public function getEmail();
 }

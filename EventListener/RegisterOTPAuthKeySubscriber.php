@@ -46,7 +46,7 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
             //generate secret key register in DB table user
             $object->setSecretAuthKey($this->OTPManager->generateSecretKey());
             //generate recovery key + secret pass for user
-            $recoveryKey = $this->OTPManager->generateSecretKey();
+            $recoveryKey = $this->OTPManager->generateRecoveryKey($object);
 
             /**
              * @TODO reset secretAuthKey with recovery key

@@ -59,6 +59,29 @@ class OTPManagerTest extends TestCase
         $this->assertGreaterThanOrEqual(60, mb_strlen($secretKey));
     }
 
+    public function testGenerateRecoveryKey()
+    {
+        $key = 'TS5DDYHMAK7GXE4PH4P44OZV7HQEAX7HZDUJSQGTALEMAPH26NWZLSMFSH5I2ORD2F5RZAZJ2I6FIDFODOIOKZG7LT4OFHXF53JZMFQ';
+
+        $object = $this->createMock(OTPAuthInterface::class);
+        $object->method('getSecretAuthKey')
+            ->willReturn($key)
+        ;
+
+        $object->method('getEmail')
+            ->willReturn('mail@mail.fr')
+        ;
+
+        $recoveryKey = $this->OTPManager->generateRecoveryKey($object);
+
+        var_dump($recoveryKey['secret']);
+        var_dump($recoveryKey['recoveryKey']);
+        $this->assertArrayHasKey('secret', $recoveryKey);
+        $this->assertArrayHasKey('recoveryKey', $recoveryKey);
+        $this->assertInternalType('string', $recoveryKey['recoveryKey']);
+        $this->assertGreaterThanOrEqual(10, mb_strlen($recoveryKey['secret']));
+    }
+
     protected function tearDown()
     {
         $this->OTPManager = '';
