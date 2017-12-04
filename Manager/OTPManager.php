@@ -98,8 +98,8 @@ class OTPManager
         $recoveryKey = hash_hmac('ripemd160', $user->getEmail().$user->getSecretAuthKey(), $secret);
 
         return array(
-            "secret" => $secret,
-            "recoveryKey" => $recoveryKey
+            'secret' => $secret,
+            'recoveryKey' => $recoveryKey,
         );
     }
 
