@@ -14,7 +14,7 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
     {
         return array(FormEvents::PRE_SET_DATA => [
             ['preSetData'],
-            ['hydrateOTP2AuthField']
+            ['hydrateOTP2AuthField'],
         ],
             FormEvents::PRE_SUBMIT => 'formProcess',
         );
@@ -46,23 +46,20 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
         $user = $event->getData();
         $form = $event->getForm();
 
-        if ($user->getId())
-        {
+        if ($user->getId()) {
             $form->add('OTP2Auth', ChoiceType::class,
                 array(
                     'choices' => array(
                         'Yes' => true,
                         'No' => false,
                     ),
-                    'choice_attr' => function($val, $key) use ($user)
-                    {
-                        if(null !== $user->getSecretAuthKey() && 'Yes' === $key)
-                        {
+                    'choice_attr' => function ($val, $key) use ($user) {
+                        if (null !== $user->getSecretAuthKey() && 'Yes' === $key) {
                             return ['selected' => null];
-                        }elseif( 'No' === $key)
-                        {
+                        } elseif ('No' === $key) {
                             return ['selected' => null];
                         }
+
                         return [];
                     },
                     'mapped' => true,
@@ -73,11 +70,10 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
             );
         }
 
-        if($user->getId() &&  null !== $user->getSecretAuthKey())
-        {
+        if ($user->getId() && null !== $user->getSecretAuthKey()) {
             $form->add('otp', TextType::class,
                 [
-                    'mapped' => false
+                    'mapped' => false,
                 ]
             );
         }
@@ -86,5 +82,4 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
     public function formProcess(FormEvent $event)
     {
     }
-
 }
