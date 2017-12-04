@@ -8,9 +8,11 @@
 
 namespace LahthonyOTPAuthBundle\EventListener;
 
+use LahthonyOTPAuthBundle\Exception\WrongOTPException;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginEventListener implements EventSubscriberInterface
@@ -37,6 +39,7 @@ class LoginEventListener implements EventSubscriberInterface
             $totp = $this->OTPManager->getOTPClient($user);
             $otp = $event->getRequest()->get('otp');
             if (false === $totp->verify($otp)) {
+                $event->getRequest()->getSession()->set(Security::AUTHENTICATION_ERROR, new WrongOTPException());
                 $this->tokenStorage->setToken(null);
             }
         }
