@@ -74,8 +74,6 @@ class OTPManagerTest extends TestCase
 
         $recoveryKey = $this->OTPManager->generateRecoveryKey($object);
 
-        var_dump($recoveryKey['secret']);
-        var_dump($recoveryKey['recoveryKey']);
         $this->assertArrayHasKey('secret', $recoveryKey);
         $this->assertArrayHasKey('recoveryKey', $recoveryKey);
         $this->assertInternalType('string', $recoveryKey['recoveryKey']);
