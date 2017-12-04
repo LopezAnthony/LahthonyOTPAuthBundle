@@ -18,8 +18,8 @@
         <defaults autowire="true" autoconfigure="true" public="false" />
 
         <!-- Load services from whatever directories you want (you can update this!) -->
-        <prototype namespace="LahthonyOTPAuthBundle\" resource="../../../../src/LahthonyOTPAuthBundle/*" exclude="../../../../src/LahthonyOTPAuthBundle/{Manager/OTPManager.php, Entity, Repository,Tests}"/>
-        <service id="lahthony_otp_auth.otp_manager" class="LahthonyOTPAuthBundle\Manager\OTPManager">
+        <prototype namespace="LahthonyOTPAuthBundle\" resource="../../../../lahthony/otp-auth-bundle/*" exclude="../../../../lahthony/otp-auth-bundle/{Manager/OTPManager.php, Entity, Repository,Tests}"/>
+        <service id="LahthonyOTPAuthBundle\Manager\OTPManager">
             <argument></argument>
             <argument></argument>
             <argument></argument>

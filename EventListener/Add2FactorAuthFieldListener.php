@@ -27,6 +27,9 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
                         'Yes' => true,
                     ),
                     'mapped' => true,
+                    'attr' => [
+                        'class' => 'browser-default',
+                    ],
                 )
             );
         }

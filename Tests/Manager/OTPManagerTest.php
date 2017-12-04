@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Etudiant
+ * TestUser: Etudiant
  * Date: 29/11/2017
  * Time: 13:22.
  */
@@ -32,6 +32,10 @@ class OTPManagerTest extends TestCase
         $object = $this->createMock(OTPAuthInterface::class);
         $object->method('getSecretAuthKey')
             ->willReturn($key)
+        ;
+
+        $object->method('getEmail')
+            ->willReturn('mail@mail.fr')
         ;
 
         $otpClient = $this->OTPManager->getOTPClient($object);

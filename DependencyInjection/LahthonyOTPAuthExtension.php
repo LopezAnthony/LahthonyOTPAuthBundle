@@ -2,6 +2,7 @@
 
 namespace LahthonyOTPAuthBundle\DependencyInjection;
 
+use LahthonyOTPAuthBundle\Manager\OTPManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -25,7 +26,7 @@ class LahthonyOTPAuthExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        $def = $container->getDefinition('lahthony_otp_auth.otp_manager');
+        $def = $container->getDefinition(OTPManager::class);
         $def->replaceArgument(0, $config['period']);
         $def->replaceArgument(1, $config['digest_algo']);
         $def->replaceArgument(2, $config['digit']);
