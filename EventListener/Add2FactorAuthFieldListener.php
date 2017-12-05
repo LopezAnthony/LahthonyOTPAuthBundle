@@ -52,13 +52,10 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
                         'Yes' => true,
                         'No' => false,
                     ),
-                    'choice_attr' => function($val, $key) use ($user)
-                    {
-                        if($user->getSecretAuthKey() && 'Yes' === $key)
-                        {
+                    'choice_attr' => function ($val, $key) use ($user) {
+                        if ($user->getSecretAuthKey() && 'Yes' === $key) {
                             return ['selected' => null];
-                        }elseif( null === $user->getSecretAuthKey() && 'No' === $key)
-                        {
+                        } elseif (null === $user->getSecretAuthKey() && 'No' === $key) {
                             return ['selected' => null];
                         }
 
@@ -77,13 +74,11 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
     {
         $user = $event->getData();
 
-        if(false === $user->getOTP2Auth())
-        {
+        if (false === $user->getOTP2Auth()) {
             $user->setSecretAuthKey(null);
         }
 
-        if($user->getID() && $user->getOTP2Auth() && null === $user->getSecretAuthKey())
-        {
+        if ($user->getID() && $user->getOTP2Auth() && null === $user->getSecretAuthKey()) {
             $user->setSecretAuthKey(true);
         }
     }
