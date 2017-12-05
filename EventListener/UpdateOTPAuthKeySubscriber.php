@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: Etudiant
  * Date: 05/12/2017
- * Time: 10:57
+ * Time: 10:57.
  */
 
 namespace LahthonyOTPAuthBundle\EventListener;
-
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -31,7 +30,6 @@ class UpdateOTPAuthKeySubscriber implements EventSubscriber
     public function preUpdate(LifecycleEventArgs $args)
     {
         $object = $args->getObject();
-
 
         /*
          * will execute only if instance of OTPAuthInterface
