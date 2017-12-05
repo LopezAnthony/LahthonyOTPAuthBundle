@@ -30,6 +30,7 @@ class TwigMailGeneratorTest extends TestCase
                 $this->equalTo('@LahthonyOTPAuth/Default/mail.twig'),
                 $this->equalTo([
                     'qrcode' => 'jhsdfjhsdkjfhkjdsfh',
+                    'otpkey' => 'otpkey',
                 ])
             )
             ->willReturn('<h1>hello</h1>>')
@@ -37,7 +38,7 @@ class TwigMailGeneratorTest extends TestCase
 
         $twigMailGenerator = new TwigMailGenerator($twigEnvironment);
 
-        $message = $twigMailGenerator->getMessage('jhsdfjhsdkjfhkjdsfh');
+        $message = $twigMailGenerator->getMessage('jhsdfjhsdkjfhkjdsfh', 'otpkey');
         $this->assertInstanceOf(Swift_Message::class, $message);
     }
 }

@@ -3,7 +3,6 @@
 namespace LahthonyOTPAuthBundle\EventListener;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,7 +15,7 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
             ['preSetData'],
             ['hydrateOTP2AuthField']
         ],
-            FormEvents::PRE_SUBMIT => 'formProcess',
+            FormEvents::SUBMIT => 'formProcess',
         );
     }
 
@@ -56,10 +55,10 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
                     ),
                     'choice_attr' => function($val, $key) use ($user)
                     {
-                        if(null !== $user->getSecretAuthKey() && 'Yes' === $key)
+                        if($user->getSecretAuthKey() && 'Yes' === $key)
                         {
                             return ['selected' => null];
-                        }elseif( 'No' === $key)
+                        }elseif( null === $user->getSecretAuthKey() && 'No' === $key)
                         {
                             return ['selected' => null];
                         }
@@ -72,19 +71,21 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
                 )
             );
         }
-
-        if($user->getId() &&  null !== $user->getSecretAuthKey())
-        {
-            $form->add('otp', TextType::class,
-                [
-                    'mapped' => false
-                ]
-            );
-        }
     }
 
     public function formProcess(FormEvent $event)
     {
+        $user = $event->getData();
+
+        if(false === $user->getOTP2Auth())
+        {
+            $user->setSecretAuthKey(null);
+        }
+
+        if($user->getID() && $user->getOTP2Auth() && null === $user->getSecretAuthKey())
+        {
+            $user->setSecretAuthKey(true);
+        }
     }
 
 }

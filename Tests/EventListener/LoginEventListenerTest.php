@@ -9,12 +9,15 @@
 namespace LahthonyOTPAuthBundle\Tests\EventListener;
 
 use LahthonyOTPAuthBundle\EventListener\LoginEventListener;
+use LahthonyOTPAuthBundle\Exception\WrongOTPException;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Tests\TestUser;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginEventListenerTest extends TestCase
@@ -55,11 +58,24 @@ class LoginEventListenerTest extends TestCase
             ->method('setToken')
         ;
 
+        $session = $this->createMock(SessionInterface::class);
+        $session
+            ->expects($this->once())
+            ->method('set')
+            ->with(
+                $this->equalTo(Security::AUTHENTICATION_ERROR),
+                $this->equalTo(new WrongOTPException())
+            );
+
         $request = $this->createMock(Request::class);
         $request
             ->method('get')
             ->with('otp')
             ->willReturn(124567);
+
+        $request
+            ->method('getSession')
+            ->willReturn($session);
 
         $token = $this->createMock(TokenInterface::class);
         $token->method('getUser')

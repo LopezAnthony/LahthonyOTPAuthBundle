@@ -81,4 +81,52 @@ class Add2FactorAuthFieldListenerTest extends TestCase
         $a2f = new Add2FactorAuthFieldListener();
         $a2f->preSetData($this->event);
     }
+
+    public function testUserSubmitNoOTPAuthActivate()
+    {
+        $user = $this->createMock(TestUser::class);
+
+        $user->method('getOTP2Auth')
+            ->willReturn(false)
+        ;
+        $user
+            ->expects($this->once())
+            ->method('setSecretAuthKey')
+            ->with(null)
+        ;
+
+        $this->event->method('getData')
+            ->willReturn($user);
+
+        $a2f = new Add2FactorAuthFieldListener();
+        $a2f->formProcess($this->event);
+    }
+
+    public function testUserSubmitYesOTPAuthActivate()
+    {
+        $user = $this->createMock(TestUser::class);
+
+        $user->method('getId')
+            ->willReturn(12)
+        ;
+        $user->method('getOTP2Auth')
+            ->willReturn(true)
+        ;
+        $user
+            ->expects($this->once())
+            ->method('getSecretAuthKey')
+            ->willReturn(null)
+        ;
+        $user
+            ->expects($this->once())
+            ->method('setSecretAuthKey')
+            ->with(true)
+        ;
+
+        $this->event->method('getData')
+            ->willReturn($user);
+
+        $a2f = new Add2FactorAuthFieldListener();
+        $a2f->formProcess($this->event);
+    }
 }

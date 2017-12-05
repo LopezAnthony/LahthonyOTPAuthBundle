@@ -1,31 +1,37 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Etudiant
+ * Date: 05/12/2017
+ * Time: 10:57
+ */
 
 namespace LahthonyOTPAuthBundle\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use LahthonyOTPAuthBundle\Service\TwigMailGenerator;
 
-class RegisterOTPAuthKeySubscriber implements EventSubscriber
+class UpdateOTPAuthKeySubscriber implements EventSubscriber
 {
     private $mailGenerator;
     private $OTPManager;
     private $mailer;
-    private $sender;
 
-    public function __construct($sender, TwigMailGenerator $mailGenerator, \Swift_Mailer $mailer, OTPManager $OTPManager)
+    public function __construct(TwigMailGenerator $mailGenerator, \Swift_Mailer $mailer, OTPManager $OTPManager)
     {
         $this->mailGenerator = $mailGenerator;
         $this->OTPManager = $OTPManager;
         $this->mailer = $mailer;
-        $this->sender = $sender;
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    public function preUpdate(LifecycleEventArgs $args)
     {
         $object = $args->getObject();
+
 
         /*
          * will execute only if instance of OTPAuthInterface
@@ -42,7 +48,7 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
             return;
         }
 
-        if (null === $object->getSecretAuthKey()) {
+        if (true === $object->getSecretAuthKey() && true === $object->getOtp2auth()) {
             //generate secret key register in DB table user
             $object->setSecretAuthKey($this->OTPManager->generateSecretKey());
             //sendmail with qrcode
@@ -55,8 +61,8 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
     {
         $totp = $this->OTPManager->getOTPClient($object);
         $userEmail = $object->getEmail();
-        $message = $this->mailGenerator->getMessage($totp->getQrCodeUri(), 'code');
-        $message->setFrom($this->sender);
+        $message = $this->mailGenerator->getMessage($totp->getQrCodeUri(), 'hello');
+        $message->setFrom('mail@mail.fr');
         $message->setTo($userEmail);
         $this->mailer->send($message);
     }
@@ -64,7 +70,7 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return array(
-            'prePersist',
+            'preUpdate',
         );
     }
 }
