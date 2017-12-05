@@ -13,7 +13,7 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
     {
         return array(FormEvents::PRE_SET_DATA => [
             ['preSetData'],
-            ['hydrateOTP2AuthField']
+            ['hydrateOTP2AuthField'],
         ],
             FormEvents::SUBMIT => 'formProcess',
         );
@@ -45,8 +45,7 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
         $user = $event->getData();
         $form = $event->getForm();
 
-        if ($user->getId())
-        {
+        if ($user->getId()) {
             $form->add('OTP2Auth', ChoiceType::class,
                 array(
                     'choices' => array(
@@ -62,6 +61,7 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
                         {
                             return ['selected' => null];
                         }
+
                         return [];
                     },
                     'mapped' => true,
@@ -87,5 +87,4 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
             $user->setSecretAuthKey(true);
         }
     }
-
 }
