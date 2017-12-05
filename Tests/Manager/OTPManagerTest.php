@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * TestUser: Etudiant
- * Date: 29/11/2017
- * Time: 13:22.
- */
 
 namespace LahthonyOTPAuthBundle\Tests\Manager;
 

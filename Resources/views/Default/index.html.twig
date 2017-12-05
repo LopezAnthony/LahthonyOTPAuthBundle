@@ -3,6 +3,6 @@
 {% block body %}
 Hello world !
     {% for message in app.flashes('2factor') %}
-        {{ message }}
+        {{ message|raw }}
     {% endfor %}
 {% endblock %}
