@@ -62,7 +62,7 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
              */
 
 
-            $this->OTPManager->generateFlash($recoveryKey['secret'], $authKey, $QRCode);
+            $this->OTPManager->generateFlash($recoveryKey['secret'], $QRCode);
             //sendmail with qrcode
 //            $this->sendMessage($object, '2Factor.');
         }
