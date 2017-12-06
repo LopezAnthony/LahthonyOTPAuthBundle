@@ -35,6 +35,9 @@ class LahthonyOTPAuthExtension extends Extension
 
         $subDef = $container->getDefinition('LahthonyOTPAuthBundle\EventListener\RegisterOTPAuthKeySubscriber');
         $subDef->replaceArgument(0, $config['sender_address']);
+
+        $container->registerForAutoconfiguration(OTPAuthInterface::class)->addTag('otp.user.tag.entity');
+
     }
 
     public function getNamespace()

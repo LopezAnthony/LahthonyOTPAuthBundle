@@ -1,6 +1,9 @@
 <?php
 
+namespace LahthonyOTPAuthBundle\Form;
+
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class RecoveryType extends AbstractType
@@ -10,9 +13,8 @@ class RecoveryType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('password')
+            ->add('password', PasswordType::class)
             ->add('recovery_key')
         ;
     }
-
 }
