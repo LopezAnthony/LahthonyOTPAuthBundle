@@ -12,7 +12,7 @@ This bundle permits to easy implements *2 factor authentication* in a symfony pr
 
 **Users** will then get **TOTP** authentication by using apps like `Google Authenticator`
 
-Let's get started. Just got through the following steps. And it will work.
+Let's get started. Just go through the following steps.
 
 Step 1: Download the Bundle
 ---------------------------
@@ -55,6 +55,15 @@ class AppKernel extends Kernel
 }
 ```
 
+Then you will need to update the `service.yml`
+
+```yaml
+    YourBundle\:
+        resource: '../../src/YourBundle/*'
+        #Remove the folder Entity From exclude folder 
+        exclude: '../../src/YourBundle/{Repository,Tests}'
+```
+
 Step 3: Implements OTPAuthInterface
 -------------------------
 
@@ -64,7 +73,7 @@ You need to implement the OTPAuthInterface on your User Entity commonly present 
 
 ```php
 <?php
-UserTest
+//src/AppBundle/Entity/User
 
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 //...
@@ -72,24 +81,35 @@ use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 class User implements OTPAuthInterface
 {
     /**
-     * This attribute need to stock in Database 
+     * This attribute needs to be stock in Database
+     * @var string 
      * @ORM\Column(name="secret_auth_key", type="string", length=255, nullable=true)
      */
     private $secretAuthKey;
 
     /**
-     * This attribute will permits to do verification on user registration 
+     * This attribute needs to be stocked in Database   
+     * @var string
+     * @ORM\Column(name="recovery_key", type="string", length=255, nullable=true)
+     */
+    private $recoveryKey;
+    
+    
+    /**
+     * This attribute will permit to do verification on user registration 
      * if he accepts 2Factor Authentication 
      * @var boolean
      */
     private $OTP2Auth;
+    
   
     /**
-     * DO NOT FORGET TO GENERATE GETTER AND SETTER FOR THESE TWO ATTRIBUTES 
+     * !!! DO NOT FORGET TO GENERATE GETTER AND SETTER FOR THESE THREE ATTRIBUTES !!! 
      */
     
-    //We'll need an email to send a qrcode to users
+    //We'll need email and password for the OTP Authentication reset
     public function getEmail(){}
+    public function getPassword(){}
         
 }
 ```
@@ -100,12 +120,16 @@ $ php bin/console doctrine:schema:update --force
 ```
 
 
-Step 4: Add on field to your `UserFormType`
+Step 4: Add one field to your `UserFormType`
 -------------------------
 
-We've made for you an eventsubscriber that permits you to add the required field easily on your`UserFormType`
+We've made for you an eventsubscriber that permits you to add the required field easily on your`UserFormType`. 
+
+You can add it on your UserEditType too if you want to permit your users to enable or disable OTP Authentication after he has registered.
 
 Just do like so:
+
+For User Registration:
 
 ```php
 <?php
@@ -124,29 +148,77 @@ class UserType
         ;
     }
     //...
+}
 ```
-Step 5: Add One Field One your Login Form
+For User Edit:
+```php
+//src/AppBundle/Form/UserEditType
+
+use LahthonyOTPAuthBundle\EventListener\Add2FactorAuthFieldListener;
+//...
+
+class UserType 
+{
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            //...
+            ->addEventSubscriber(new Add2FactorAuthFieldListener())
+        ;
+    }
+    //...
+}
+```
+
+Step 5: Update your Login Form And your homepage
 -------------------------
 
-You need now to add one field one your login form.
+You need now to add one field one your login form and the link to reset the authenticator
 
 ```html
+<!--login login.html.twig -->
 <form>
-
     <label for="otp">Code OTP(optionnal if you haven't accept 2factorAuth)</label>
     <input type="text" name="otp">
-    
 </form>
+<a href="{{ path('lahthony_otp_ask_recovery') }}">I've lost my OTP Authenticator.</a>
+```
+```html
+<!-- homepage index.html.twig -->
+    <div class="flash-notice">
+        {% for message in app.flashes('2factor') %}
+            {{ message|raw }}
+        {% endfor %}
+        {% for message in app.flashes('reset') %}
+            {{ message }}
+        {% endfor %}
+    </div>
 ```
 
-Step 6: Enjoy
+Step 6: Import Routes
+-------------------------
+
+In your `routing.yml` import routes from our bundle :
+
+```yaml
+lahthony_otp_auth_recovery:
+    resource: "@LahthonyOTPAuthBundle/Resources/config/routing.xml"
+```
+
+Step 7: Enjoy
 -------------------------
 
 - You can now try it. First create a user that accepts the **2Factor Authentication**.
 
-- Then he will receive a **QRCode** on his email. Scan it with an otp app like **Google Authenticator** [dowload it here](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=fr)
+- Then a flash message will appears on your homepage with the **QRCode** and the **Recovery Pass**.
+ 
+    :warning: Don't forget to wrote it down the **Recovery Pass** if you want to recover an account that has lost its authenticator. :warning:
 
-- Finally go on the login page and enter the generated code on your app to connect.
+    Scan the **QRCode** with an otp app like **Google Authenticator** [dowload it here](https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=fr)
+
+- Go on the login page and enter the generated code on your app to connect.
+
+- You can now update it from your user edit ask to disable it.
 
 - That's magic right ?! Hope you like it; feel free to give us feed backs and report bugs. We'd like to know your opinion. 
 
@@ -167,6 +239,5 @@ lahthony_otp_auth:
         'your_website_name'
     image:
          null
-    sender_address:
-        'yourwebsiteaddress@gmail.com'
+    roles: []
 ```
