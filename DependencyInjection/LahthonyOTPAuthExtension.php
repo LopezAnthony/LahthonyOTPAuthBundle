@@ -3,6 +3,7 @@
 namespace LahthonyOTPAuthBundle\DependencyInjection;
 
 use LahthonyOTPAuthBundle\Manager\OTPManager;
+use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -35,6 +36,9 @@ class LahthonyOTPAuthExtension extends Extension
 
         $subDef = $container->getDefinition('LahthonyOTPAuthBundle\EventListener\RegisterOTPAuthKeySubscriber');
         $subDef->replaceArgument(0, $config['sender_address']);
+
+        $container->registerForAutoconfiguration(OTPAuthInterface::class)->addTag('otp.user.tag.entity');
+
     }
 
     public function getNamespace()

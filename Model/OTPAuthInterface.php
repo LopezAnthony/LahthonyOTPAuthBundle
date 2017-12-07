@@ -45,11 +45,36 @@ interface OTPAuthInterface
      *                <code>
      *                public function getSecretAuthKey()
      *                {
-     *                return return $this->secretAuthKey;
+     *                      return $this->secretAuthKey;
      *                }
      *                </code>
      */
     public function getSecretAuthKey();
 
+    /**
+     * @param $recoveryKey
+     *
+     * @return mixed
+     *               <code>
+     *               public function setRecoveryKey($recoveryKey)
+     *               {
+     *               $this->recoveryKey = $recoveryKey;
+     *               }
+     *               </code>
+     */
+    public function setRecoveryKey($recoveryKey);
+
+    /**
+     * @return string
+     *                <code>
+     *                public function getRecoveryKey()
+     *                {
+     *                      return return $this->recoveryKey;
+     *                }
+     *                </code>
+     */
+    public function getRecoveryKey();
+
     public function getEmail();
+    public function getPassword();
 }

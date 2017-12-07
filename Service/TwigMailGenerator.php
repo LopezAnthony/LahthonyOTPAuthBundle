@@ -13,10 +13,10 @@ class TwigMailGenerator
         $this->twig = $twig;
     }
 
-    public function getMessage($qrcode)
+    public function getMessage($email)
     {
-        $template = $this->twig->render('@LahthonyOTPAuth/Default/mail.twig', [
-            'qrcode' => $qrcode,
+        $template = $this->twig->render('@LahthonyOTPAuth/mail.twig', [
+            'email' => $email,
         ]);
 
         $swiftMessage = new \Swift_Message('2Factor Auth');

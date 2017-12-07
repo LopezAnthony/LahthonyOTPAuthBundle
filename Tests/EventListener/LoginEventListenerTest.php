@@ -13,6 +13,7 @@ use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Tests\TestUser;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -33,11 +34,17 @@ class LoginEventListenerTest extends TestCase
      */
     private $event;
 
+    /**
+     * @var FlashBagInterface
+     */
+    private $flashBag;
+
     public function setUp()
     {
         $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
+        $this->flashBag = $this->createMock(FlashBagInterface::class);
 
-        $this->otpManager = new OTPManager(30, 'sha1', 6, '', '');
+        $this->otpManager = new OTPManager(30, 'sha1', 6, '', '', $this->flashBag);
 
         $this->event = $this->getMockBuilder(InteractiveLoginEvent::class)
             ->setMethods(['getAuthenticationToken', 'getRequest'])
