@@ -49,7 +49,7 @@ class UpdateOTPAuthKeySubcriber implements EventSubscriber
             $totp = $this->OTPManager->getOTPClient($object);
             $QRCode = $totp->getQrCodeUri();
 
-            $this->OTPManager->generateFlash($recoveryKey['2factor'], $QRCode);
+            $this->OTPManager->generateFlash($recoveryKey['secret'], $QRCode);
         }
     }
 

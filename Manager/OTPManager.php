@@ -7,19 +7,43 @@ use OTPHP\TOTP;
 use ParagonIE\ConstantTime\Base32;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
-
+/**
+ * Class OTPManager.
+ */
 class OTPManager
 {
-
+    /**
+     * @var int
+     */
     private $period;
+
+    /**
+     * @var string
+     */
     private $digestAlgo;
+
+    /**
+     * @var int
+     */
     private $digit;
+
+    /**
+     * @var string
+     */
     private $issuer;
+
+    /**
+     * @var string
+     */
     private $image;
+    /**
+     * @var FlashBagInterface
+     */
     private $flashBag;
 
     public function __construct($period, $digestAlgo, $digit, $issuer, $image, FlashBagInterface $flashBag)
     {
+        // TODO: use option resolver?
         $this->period = $period;
         $this->digestAlgo = $digestAlgo;
         $this->digit = $digit;
@@ -79,7 +103,7 @@ class OTPManager
         );
     }
 
-    public function generateFlash($recoveryKey, $qrCodeUri)
+    public function generateFlash($secret, $qrCodeUri)
     {
         return $this->flashBag->add('2factor',
             "<div>
@@ -88,7 +112,7 @@ class OTPManager
                 <p>Then all you need is to scan the following qrcode.</p>
                 <p>QRCode: </p>
                 <p><img src=\"$qrCodeUri\"></p>
-                <p>Please make sure to write down the following code (you'll need it if you lose your device) : <strong> $recoveryKey </strong></p>
+                <p>Please make sure to write down the following code (you'll need it if you lose your device) : <strong> $secret </strong></p>
             </div>"
         );
     }

@@ -43,7 +43,7 @@
                 <tr>
                     <td align="center" valign="top" style="padding: 10px 10px 60px 10px; background-color: #2f2f2f;">
                         <small>
-                            <a style="color: #728f92; font-family: sans-serif; text-decoration: none; " href="{{ path('lahthony_otp_auth_recovery', {'email': {{ email }} }) }}">Reset My OTP Authenticator</a>
+                            <a style="color: #728f92; font-family: sans-serif; text-decoration: none; " href="{{ app.request.getSchemeAndHttpHost() }}{{ path('lahthony_otp_auth_recovery', {'email': email }) }}">Reset My OTP Authenticator</a>
                         </small>
                     </td>
                 </tr>
