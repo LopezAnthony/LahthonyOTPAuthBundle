@@ -6,12 +6,10 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use LahthonyOTPAuthBundle\EventListener\RegisterOTPAuthKeySubscriber;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
-use LahthonyOTPAuthBundle\Service\TwigMailGenerator;
 use LahthonyOTPAuthBundle\Tests\TestUser;
 use OTPHP\OTP;
 use PHPUnit\Framework\TestCase;
 use Swift_Mailer;
-use Swift_Message;
 
 class RegisterOTPAuthKeySubscriberTest extends TestCase
 {
@@ -81,7 +79,7 @@ class RegisterOTPAuthKeySubscriberTest extends TestCase
         $key = 'TS5DDYHMAK7GXE4PH4P44OZV7HQEAX7HZDUJSQGTALEMAPH26NWZLSMFSH5I2ORD2F5RZAZJ2I6FIDFODOIOKZG7LT4OFHXF53JZMFQ';
         $recoveryKey = [
             'recoveryKey' => 'SFKY6MTXHWAPLK5OHDBCPJF3X7CMWLWX7W6V6SA3KTHMA6FCIMLK4CLFPBYITXKJYRJNUCA4NAA5BVNGZ6CHTIA5JWV75BQF3Q72ODSFDG7WCHCQEJDH2WZLRT2TKCH4GYZBT35JOKYZFNFLA6HVPRDEYPNAVPVCAOLWWBVBI6T4W5LNTUBLMZGA3L2LLTQBLUYYICXNIJ7NI',
-            'secret' => 'AI458L2K65'
+            'secret' => 'AI458L2K65',
         ];
 
         $object = new TestUser();

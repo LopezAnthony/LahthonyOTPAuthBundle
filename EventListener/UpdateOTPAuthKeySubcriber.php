@@ -2,7 +2,6 @@
 
 namespace LahthonyOTPAuthBundle\EventListener;
 
-
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
