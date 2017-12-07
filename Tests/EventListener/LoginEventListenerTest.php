@@ -8,14 +8,18 @@
 
 namespace LahthonyOTPAuthBundle\Tests\EventListener;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use LahthonyOTPAuthBundle\EventListener\LoginEventListener;
+use LahthonyOTPAuthBundle\Exception\WrongOTPException;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Tests\TestUser;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginEventListenerTest extends TestCase
@@ -39,10 +43,16 @@ class LoginEventListenerTest extends TestCase
      */
     private $flashBag;
 
+    /**
+     * @var ObjectManager
+     */
+    private $manager;
+
     public function setUp()
     {
         $this->tokenStorage = $this->createMock(TokenStorageInterface::class);
         $this->flashBag = $this->createMock(FlashBagInterface::class);
+        $this->manager = $this->createMock(ObjectManager::class);
 
         $this->otpManager = new OTPManager(30, 'sha1', 6, '', '', $this->flashBag);
 
@@ -62,11 +72,19 @@ class LoginEventListenerTest extends TestCase
             ->method('setToken')
         ;
 
+        $session = $this->createMock(Session::class);
+        $session->method('set')
+            ->with($this->equalTo(Security::AUTHENTICATION_ERROR), $this->isInstanceOf(WrongOTPException::class));
+
         $request = $this->createMock(Request::class);
         $request
             ->method('get')
             ->with('otp')
             ->willReturn(124567);
+
+        $request
+            ->method('getSession')
+            ->willReturn($session);
 
         $token = $this->createMock(TokenInterface::class);
         $token->method('getUser')
@@ -74,7 +92,7 @@ class LoginEventListenerTest extends TestCase
 
         $this->setEvent($token, $request);
 
-        $loginEventListener = new LoginEventListener($this->tokenStorage, $this->otpManager);
+        $loginEventListener = new LoginEventListener(['ROLE_ADMIN'], $this->tokenStorage, $this->otpManager, $this->manager);
         $loginEventListener->onAuthenticationSuccess($this->event);
     }
 
@@ -101,7 +119,7 @@ class LoginEventListenerTest extends TestCase
 
         $this->setEvent($token, $request);
 
-        $loginEventListener = new LoginEventListener($this->tokenStorage, $this->otpManager);
+        $loginEventListener = new LoginEventListener(['ROLE_ADMIN'], $this->tokenStorage, $this->otpManager, $this->manager);
         $loginEventListener->onAuthenticationSuccess($this->event);
     }
 

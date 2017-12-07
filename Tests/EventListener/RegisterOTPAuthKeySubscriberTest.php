@@ -6,12 +6,10 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use LahthonyOTPAuthBundle\EventListener\RegisterOTPAuthKeySubscriber;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
-use LahthonyOTPAuthBundle\Service\TwigMailGenerator;
 use LahthonyOTPAuthBundle\Tests\TestUser;
 use OTPHP\OTP;
 use PHPUnit\Framework\TestCase;
 use Swift_Mailer;
-use Swift_Message;
 
 class RegisterOTPAuthKeySubscriberTest extends TestCase
 {
@@ -42,19 +40,13 @@ class RegisterOTPAuthKeySubscriberTest extends TestCase
 
     protected function setUp()
     {
-        $mailer = $this->createMock(Swift_Mailer::class);
         $otpManager = $this->createMock(OTPManager::class);
-        $mailGenerator = $this->createMock(TwigMailGenerator::class);
-        $mailGenerator
-            ->method('getMessage')
-            ->willReturn($this->createMock(Swift_Message::class))
-        ;
 
-        $this->RegisterOTPAuthKeySubscriber = new RegisterOTPAuthKeySubscriber('mail@mail.fr', $mailGenerator, $mailer, $otpManager);
+        $this->RegisterOTPAuthKeySubscriber = new RegisterOTPAuthKeySubscriber($otpManager);
 
         $this->otp = $this->createMock(OTP::class);
         $this->arg = $this->createMock(LifecycleEventArgs::class);
-        $this->mailer = $mailer;
+
         $this->otpManager = $otpManager;
     }
 
@@ -82,12 +74,21 @@ class RegisterOTPAuthKeySubscriberTest extends TestCase
         $this->assertNull($result);
     }
 
-    public function testIfSecretKeyAreGenerateAndAMailSend()
+    public function testIfSecretKeyAreGenerateAndAFlashMessageIsAdded()
     {
         $key = 'TS5DDYHMAK7GXE4PH4P44OZV7HQEAX7HZDUJSQGTALEMAPH26NWZLSMFSH5I2ORD2F5RZAZJ2I6FIDFODOIOKZG7LT4OFHXF53JZMFQ';
+        $recoveryKey = [
+            'recoveryKey' => 'SFKY6MTXHWAPLK5OHDBCPJF3X7CMWLWX7W6V6SA3KTHMA6FCIMLK4CLFPBYITXKJYRJNUCA4NAA5BVNGZ6CHTIA5JWV75BQF3Q72ODSFDG7WCHCQEJDH2WZLRT2TKCH4GYZBT35JOKYZFNFLA6HVPRDEYPNAVPVCAOLWWBVBI6T4W5LNTUBLMZGA3L2LLTQBLUYYICXNIJ7NI',
+            'secret' => 'AI458L2K65',
+        ];
 
         $object = new TestUser();
         $object->setOTP2Auth(true);
+
+        $this->otpManager
+            ->method('generateRecoveryKey')
+            ->willReturn($recoveryKey)
+        ;
 
         $this->otpManager
             ->method('generateSecretKey')
@@ -97,6 +98,12 @@ class RegisterOTPAuthKeySubscriberTest extends TestCase
         $this->otpManager
             ->method('getOTPClient')
             ->willReturn($this->otp)
+        ;
+
+        $this->otpManager
+            ->expects($this->once())
+            ->method('generateFlash')
+            ->with($this->equalTo($recoveryKey['secret']))
         ;
 
         $this->arg
