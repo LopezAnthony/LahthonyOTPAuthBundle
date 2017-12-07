@@ -2,6 +2,7 @@
 
 namespace LahthonyOTPAuthBundle\DependencyInjection;
 
+use LahthonyOTPAuthBundle\EventListener\LoginEventListener;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -35,6 +36,9 @@ class LahthonyOTPAuthExtension extends Extension
 
         $subDef = $container->getDefinition('LahthonyOTPAuthBundle\EventListener\RegisterOTPAuthKeySubscriber');
         $subDef->replaceArgument(0, $config['sender_address']);
+
+        $def = $container->getDefinition(LoginEventListener::class);
+        $def->replaceArgument(0, $config['roles']);
     }
 
     public function getNamespace()

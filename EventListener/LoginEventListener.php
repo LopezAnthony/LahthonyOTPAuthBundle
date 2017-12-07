@@ -8,14 +8,15 @@
 
 namespace LahthonyOTPAuthBundle\EventListener;
 
+use Doctrine\Common\Persistence\ObjectManager;
 use LahthonyOTPAuthBundle\Exception\WrongOTPException;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use LahthonyOTPAuthBundle\Service\TwigMailGenerator;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
-class LoginEventListener implements EventSubscriberInterface
+class LoginEventListener
 {
     private $tokenStorage;
 
@@ -23,11 +24,31 @@ class LoginEventListener implements EventSubscriberInterface
      * @var OTPManager
      */
     private $OTPManager;
+    /**
+     * @var
+     */
+    private $roles;
+    /**
+     * @var TwigMailGenerator
+     */
+    private $mailGenerator;
+    /**
+     * @var \Swift_Mailer
+     */
+    private $mailer;
+    /**
+     * @var ObjectManager
+     */
+    private $manager;
 
-    public function __construct(TokenStorageInterface $tokenStorage, OTPManager $OTPManager)
+    public function __construct($roles, TokenStorageInterface $tokenStorage, OTPManager $OTPManager, TwigMailGenerator $mailGenerator, \Swift_Mailer $mailer, ObjectManager $manager)
     {
         $this->tokenStorage = $tokenStorage;
         $this->OTPManager = $OTPManager;
+        $this->roles = $roles;
+        $this->mailGenerator = $mailGenerator;
+        $this->mailer = $mailer;
+        $this->manager = $manager;
     }
 
     public function onAuthenticationSuccess(InteractiveLoginEvent $event)
@@ -43,10 +64,30 @@ class LoginEventListener implements EventSubscriberInterface
                 $this->tokenStorage->setToken(null);
             }
         }
+
+        if(null === $user->getSecretAuthKey())
+        {
+            foreach ($user->getRoles() as $role)
+            {
+                if(in_array($role, $this->roles) && null === $user->getSecretAuthKey())
+                {
+                    $user->setSecretAuthKey($this->OTPManager->generateSecretKey());
+                    $this->manager->persist($user);
+                    $this->manager->flush();
+                    $this->sendMessage($user);
+                }
+            }
+        }
     }
 
-    public static function getSubscribedEvents()
+    public function sendMessage($object)
     {
-        return array('onAuthenticationSuccess');
+        $totp = $this->OTPManager->getOTPClient($object);
+        $userEmail = $object->getEmail();
+        $message = $this->mailGenerator->getMessage($totp->getQrCodeUri(), 'code');
+        $message->setFrom('mail@mail.fr');
+        $message->setTo($userEmail);
+        $this->mailer->send($message);
     }
+
 }
