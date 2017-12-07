@@ -38,7 +38,6 @@ class LahthonyOTPAuthExtension extends Extension
         $subDef->replaceArgument(0, $config['sender_address']);
 
         $container->registerForAutoconfiguration(OTPAuthInterface::class)->addTag('otp.user.tag.entity');
-
     }
 
     public function getNamespace()

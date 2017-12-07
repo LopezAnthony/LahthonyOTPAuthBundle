@@ -45,7 +45,7 @@ interface OTPAuthInterface
      *                <code>
      *                public function getSecretAuthKey()
      *                {
-     *                      return $this->secretAuthKey;
+     *                return $this->secretAuthKey;
      *                }
      *                </code>
      */
@@ -69,12 +69,13 @@ interface OTPAuthInterface
      *                <code>
      *                public function getRecoveryKey()
      *                {
-     *                      return return $this->recoveryKey;
+     *                return return $this->recoveryKey;
      *                }
      *                </code>
      */
     public function getRecoveryKey();
 
     public function getEmail();
+
     public function getPassword();
 }
