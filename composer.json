@@ -4,7 +4,7 @@
     "description": "TOTP authentification",
     "homepage": "https://github.com/LopezAnthony/LahthonyOTPAuthBundle",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "authors": [
         {
             "name": "Lahcen",

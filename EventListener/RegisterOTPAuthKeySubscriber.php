@@ -31,7 +31,7 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
          * If the user doesn't accept the 2 factor authentication
          * stop execution
          */
-        if (false == $object->getOtp2auth()) {
+        if (false === $object->getOtp2auth()) {
             return;
         }
 
