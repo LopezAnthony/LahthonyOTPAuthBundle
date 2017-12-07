@@ -23,6 +23,7 @@ class LoginEventListener
         $this->roles = $roles;
         $this->manager = $manager;
     }
+
     public function onAuthenticationSuccess(InteractiveLoginEvent $event)
     {
         $token = $event->getAuthenticationToken();
@@ -49,5 +50,4 @@ class LoginEventListener
             }
         }
     }
-
 }
