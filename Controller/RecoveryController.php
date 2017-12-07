@@ -26,7 +26,7 @@ class RecoveryController extends Controller
             $recoveryManager->resetOTP($user);
             $manager->flush();
 
-            $this->addFlash('secret', 'You\'ve reset your OTP Authentication you can go to your profil page to ask for a new one');
+            $this->addFlash('reset', 'You\'ve reset your OTP Authentication, you can login normally then go to your profile page to ask for a new one !');
         }
 
         return $this->render('@LahthonyOTPAuth/recovery.html.twig',
