@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RecoveryController extends Controller
 {
-    public function askAction(Request $request, TwigMailGenerator $mailGenerator, \Swift_Mailer $mailer){
-
+    public function askAction(Request $request, TwigMailGenerator $mailGenerator, \Swift_Mailer $mailer)
+    {
         $defaultData = array('message' => 'Please Enter your Email to reset your OTP Authentication.');
         $form = $this->createFormBuilder($defaultData)
             ->add('email', EmailType::class)
@@ -31,9 +31,10 @@ class RecoveryController extends Controller
 
             return $this->redirect('/');
         }
+
         return $this->render('@LahthonyOTPAuth/ask.html.twig',
             [
-                'form' => $form->createView()
+                'form' => $form->createView(),
             ]
         );
     }
@@ -43,7 +44,6 @@ class RecoveryController extends Controller
         $entity = $this->getParameter('otp.user.entity');
         $manager = $this->getDoctrine()->getManager();
         $user = $manager->getRepository($entity)->findOneByEmail($email);
-
 
         $form = $this->createForm(RecoveryType::class);
         $form->handleRequest($request);

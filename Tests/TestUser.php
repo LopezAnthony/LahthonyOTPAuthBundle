@@ -202,6 +202,7 @@ class TestUser implements OTPAuthInterface
 
     /**
      * @param mixed $recoveryKey
+     *
      * @return string
      */
     public function setRecoveryKey($recoveryKey)
