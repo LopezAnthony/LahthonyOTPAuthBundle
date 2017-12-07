@@ -18,6 +18,7 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
             FormEvents::SUBMIT => 'formProcess',
         );
     }
+
     public function preSetData(FormEvent $event)
     {
         $user = $event->getData();
@@ -37,6 +38,7 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
             );
         }
     }
+
     public function hydrateOTP2AuthField(FormEvent $event)
     {
         $user = $event->getData();
@@ -54,6 +56,7 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
                         } elseif (null === $user->getSecretAuthKey() && 'No' === $key) {
                             return ['selected' => null];
                         }
+
                         return [];
                     },
                     'mapped' => true,
@@ -64,6 +67,7 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
             );
         }
     }
+
     public function formProcess(FormEvent $event)
     {
         $user = $event->getData();
