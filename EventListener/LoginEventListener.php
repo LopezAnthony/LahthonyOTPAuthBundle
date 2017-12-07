@@ -65,12 +65,9 @@ class LoginEventListener
             }
         }
 
-        if(null === $user->getSecretAuthKey())
-        {
-            foreach ($user->getRoles() as $role)
-            {
-                if(in_array($role, $this->roles) && null === $user->getSecretAuthKey())
-                {
+        if (null === $user->getSecretAuthKey()) {
+            foreach ($user->getRoles() as $role) {
+                if (in_array($role, $this->roles) && null === $user->getSecretAuthKey()) {
                     $user->setSecretAuthKey($this->OTPManager->generateSecretKey());
                     $this->manager->persist($user);
                     $this->manager->flush();
@@ -89,5 +86,4 @@ class LoginEventListener
         $message->setTo($userEmail);
         $this->mailer->send($message);
     }
-
 }
