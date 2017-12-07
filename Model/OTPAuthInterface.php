@@ -76,4 +76,5 @@ interface OTPAuthInterface
     public function getRecoveryKey();
 
     public function getEmail();
+    public function getPassword();
 }

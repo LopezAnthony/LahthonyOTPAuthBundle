@@ -54,17 +54,9 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
             //Get the QRCode to display in the flash message
             $totp = $this->OTPManager->getOTPClient($object);
             $QRCode = $totp->getQrCodeUri();
-            /**
-             * @TODO reset secretAuthKey with recovery key
-             * if(hash_compare((hash_hashmac($user->getEmail(),$user->getSecretAuthKey, $secret)), $user->getRecoveryKey()){
-             *      return true;
-             * }
-             */
-
 
             $this->OTPManager->generateFlash($recoveryKey['secret'], $QRCode);
-            //sendmail with qrcode
-//            $this->sendMessage($object, '2Factor.');
+
         }
     }
 

@@ -14,7 +14,6 @@ class RecoveryType extends AbstractType
         $builder
             ->add('email')
             ->add('password', PasswordType::class)
-            ->add('recovery_key')
         ;
     }
 }

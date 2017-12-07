@@ -3,6 +3,7 @@
 namespace LahthonyOTPAuthBundle\DependencyInjection;
 
 use LahthonyOTPAuthBundle\Manager\OTPManager;
+use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
