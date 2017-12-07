@@ -6,15 +6,15 @@ use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 
 class RecoveryManager
 {
-
-    public  function verifyOTPKey($secret,OTPAuthInterface $user)
+    public function verifyOTPKey($secret, OTPAuthInterface $user)
     {
         $email = $user->getEmail();
         $secretAuthKey = $user->getSecretAuthKey();
 
-        if(true !== hash_equals((hash_hmac('ripemd160', $email.$secretAuthKey, $secret)), $user->getRecoveryKey())){
+        if (true !== hash_equals((hash_hmac('ripemd160', $email.$secretAuthKey, $secret)), $user->getRecoveryKey())) {
             return false;
         }
+
         return true;
     }
 
