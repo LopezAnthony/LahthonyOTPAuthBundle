@@ -60,17 +60,6 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
         }
     }
 
-//TODO may be removed?
-//    public function sendMessage($object, $subject)
-//    {
-//        $totp = $this->OTPManager->getOTPClient($object);
-//        $userEmail = $object->getEmail();
-//        $message = $this->mailGenerator->getMessage($totp->getQrCodeUri());
-//        $message->setFrom($this->sender);
-//        $message->setTo($userEmail);
-//        $this->mailer->send($message);
-//    }
-
     public function getSubscribedEvents()
     {
         return array(

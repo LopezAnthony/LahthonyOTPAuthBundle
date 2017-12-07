@@ -7,4 +7,7 @@
     <route id="lahthony_otp_auth_recovery" path="/recovery/{email}">
         <default key="_controller">LahthonyOTPAuthBundle:Recovery:recovery</default>
     </route>
+    <route id="lahthony_otp_ask_recovery" path="/recovery">
+        <default key="_controller">LahthonyOTPAuthBundle:Recovery:ask</default>
+    </route>
 </routes>
