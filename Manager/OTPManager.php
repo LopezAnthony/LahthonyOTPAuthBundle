@@ -7,43 +7,19 @@ use OTPHP\TOTP;
 use ParagonIE\ConstantTime\Base32;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
-/**
- * Class OTPManager.
- */
+
 class OTPManager
 {
-    /**
-     * @var int
-     */
+
     private $period;
-
-    /**
-     * @var string
-     */
     private $digestAlgo;
-
-    /**
-     * @var int
-     */
     private $digit;
-
-    /**
-     * @var string
-     */
     private $issuer;
-
-    /**
-     * @var string
-     */
     private $image;
-    /**
-     * @var FlashBagInterface
-     */
     private $flashBag;
 
     public function __construct($period, $digestAlgo, $digit, $issuer, $image, FlashBagInterface $flashBag)
     {
-        // TODO: use option resolver?
         $this->period = $period;
         $this->digestAlgo = $digestAlgo;
         $this->digit = $digit;

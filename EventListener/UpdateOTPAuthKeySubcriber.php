@@ -2,12 +2,13 @@
 
 namespace LahthonyOTPAuthBundle\EventListener;
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
+
 use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 
-class RegisterOTPAuthKeySubscriber implements EventSubscriber
+class UpdateOTPAuthKeySubcriber implements EventSubscriber
 {
     private $OTPManager;
 
@@ -16,7 +17,7 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
         $this->OTPManager = $OTPManager;
     }
 
-    public function prePersist(LifecycleEventArgs $args)
+    public function preUpdate(LifecycleEventArgs $args)
     {
         $object = $args->getObject();
 
@@ -31,11 +32,11 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
          * If the user doesn't accept the 2 factor authentication
          * stop execution
          */
-        if (false == $object->getOtp2auth()) {
+        if (false === $object->getOtp2auth()) {
             return;
         }
 
-        if (null === $object->getSecretAuthKey()) {
+        if (true === $object->getSecretAuthKey() && true === $object->getOTP2Auth()) {
             //generate secret key register in DB table user
             $authKey = $this->OTPManager->generateSecretKey();
             $object->setSecretAuthKey($authKey);
@@ -55,7 +56,7 @@ class RegisterOTPAuthKeySubscriber implements EventSubscriber
     public function getSubscribedEvents()
     {
         return array(
-            'prePersist',
+            'preUpdate',
         );
     }
 }
