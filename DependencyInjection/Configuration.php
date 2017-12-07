@@ -41,8 +41,10 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('image')
                     ->defaultNull()
                 ->end()
-                ->scalarNode('sender_address')
-                    ->defaultValue('2factorAuth@gmail.com')
+                ->arrayNode('roles')
+                    ->scalarPrototype()
+                        ->defaultNull()
+                    ->end()
                 ->end()
         ;
 

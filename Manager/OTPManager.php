@@ -5,6 +5,7 @@ namespace LahthonyOTPAuthBundle\Manager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use OTPHP\TOTP;
 use ParagonIE\ConstantTime\Base32;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 /**
  * Class OTPManager.
@@ -35,8 +36,12 @@ class OTPManager
      * @var string
      */
     private $image;
+    /**
+     * @var FlashBagInterface
+     */
+    private $flashBag;
 
-    public function __construct($period, $digestAlgo, $digit, $issuer, $image)
+    public function __construct($period, $digestAlgo, $digit, $issuer, $image, FlashBagInterface $flashBag)
     {
         // TODO: use option resolver?
         $this->period = $period;
@@ -44,6 +49,7 @@ class OTPManager
         $this->digit = $digit;
         $this->issuer = $issuer;
         $this->image = $image;
+        $this->flashBag = $flashBag;
     }
 
     /**
@@ -84,5 +90,30 @@ class OTPManager
         $mySecret = trim(Base32::encodeUpper(random_bytes(128)), '=');
 
         return $mySecret;
+    }
+
+    public function generateRecoveryKey(OTPAuthInterface $user)
+    {
+        $secret = trim(Base32::encodeUpper(random_bytes(6)), '=');
+        $recoveryKey = hash_hmac('ripemd160', $user->getEmail().$user->getSecretAuthKey(), $secret);
+
+        return array(
+            'secret' => $secret,
+            'recoveryKey' => $recoveryKey,
+        );
+    }
+
+    public function generateFlash($secret, $qrCodeUri)
+    {
+        return $this->flashBag->add('2factor',
+            "<div>
+                <p>To use your 2factor authenticator you'll need google authenticator or any app like so.</p>
+                <p>You can download it <a href=\"https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=fr\">Here</a> for playstore.</p> 
+                <p>Then all you need is to scan the following qrcode.</p>
+                <p>QRCode: </p>
+                <p><img src=\"$qrCodeUri\"></p>
+                <p>Please make sure to write down the following code (you'll need it if you lose your device) : <strong> $secret </strong></p>
+            </div>"
+        );
     }
 }

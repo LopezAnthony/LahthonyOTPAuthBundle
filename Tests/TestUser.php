@@ -52,6 +52,12 @@ class TestUser implements OTPAuthInterface
     private $secretAuthKey;
 
     /**
+     * @var string
+     * @ORM\Column(name="secret_auth_key", type="string", length=255, nullable=true)
+     */
+    private $recoveryKey;
+
+    /**
      * @var bool
      */
     private $OTP2Auth;
@@ -184,5 +190,23 @@ class TestUser implements OTPAuthInterface
     public function getSecretAuthKey()
     {
         return $this->secretAuthKey;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecoveryKey()
+    {
+        return $this->recoveryKey;
+    }
+
+    /**
+     * @param mixed $recoveryKey
+     *
+     * @return string
+     */
+    public function setRecoveryKey($recoveryKey)
+    {
+        $this->recoveryKey = $recoveryKey;
     }
 }

@@ -13,12 +13,6 @@ use PHPUnit\Framework\TestCase;
 use Swift_Mailer;
 use Swift_Message;
 
-/**
- * Created by PhpStorm.
- * TestUser: Etudiant
- * Date: 29/11/2017
- * Time: 15:29.
- */
 class RegisterOTPAuthKeySubscriberTest extends TestCase
 {
     /**
