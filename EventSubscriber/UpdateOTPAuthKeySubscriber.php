@@ -1,6 +1,6 @@
 <?php
 
-namespace LahthonyOTPAuthBundle\EventListener;
+namespace LahthonyOTPAuthBundle\EventSubscriber;
 
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;

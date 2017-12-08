@@ -1,27 +1,26 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Etudiant
- * Date: 08/12/2017
- * Time: 12:00.
- */
 
-namespace LahthonyOTPAuthBundle\Tests\EventListener;
+namespace LahthonyOTPAuthBundle\Tests\EventSubscriber;
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
-use LahthonyOTPAuthBundle\EventListener\UpdateOTPAuthKeySubscriber;
+use LahthonyOTPAuthBundle\EventSubscriber\RegisterOTPAuthKeySubscriber;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use LahthonyOTPAuthBundle\Tests\TestUser;
 use OTPHP\OTP;
 use PHPUnit\Framework\TestCase;
 
-class UpdateOTPAuthKeySubscriberTest extends TestCase
+class RegisterOTPAuthKeySubscriberTest extends TestCase
 {
     /**
      * @var OTPManager
      */
     private $otpManager;
+
+    /**
+     * @var RegisterOTPAuthKeySubscriber
+     */
+    private $RegisterOTPAuthKeySubscriber;
 
     /**
      * @var LifecycleEventArgs
@@ -37,6 +36,8 @@ class UpdateOTPAuthKeySubscriberTest extends TestCase
     {
         $otpManager = $this->createMock(OTPManager::class);
 
+        $this->RegisterOTPAuthKeySubscriber = new RegisterOTPAuthKeySubscriber($otpManager);
+
         $this->otp = $this->createMock(OTP::class);
         $this->arg = $this->createMock(LifecycleEventArgs::class);
 
@@ -45,8 +46,7 @@ class UpdateOTPAuthKeySubscriberTest extends TestCase
 
     public function testWillReturnNullIfNotImplementOTPAuthInterface()
     {
-        $UpdateOTPAuthKeySubscriber = new UpdateOTPAuthKeySubscriber($this->otpManager);
-        $result = $UpdateOTPAuthKeySubscriber->preUpdate($this->arg);
+        $result = $this->RegisterOTPAuthKeySubscriber->prePersist($this->arg);
         $this->assertNull($result);
     }
 
@@ -64,8 +64,7 @@ class UpdateOTPAuthKeySubscriberTest extends TestCase
             ->willReturn($object)
         ;
 
-        $UpdateOTPAuthKeySubscriber = new UpdateOTPAuthKeySubscriber($this->otpManager);
-        $result = $UpdateOTPAuthKeySubscriber->preUpdate($this->arg);
+        $result = $this->RegisterOTPAuthKeySubscriber->prePersist($this->arg);
         $this->assertNull($result);
     }
 
@@ -79,26 +78,23 @@ class UpdateOTPAuthKeySubscriberTest extends TestCase
 
         $object = new TestUser();
         $object->setOTP2Auth(true);
-        $object->setSecretAuthKey(true);
 
-        $otpManager = $this->otpManager;
-
-        $otpManager
+        $this->otpManager
             ->method('generateRecoveryKey')
             ->willReturn($recoveryKey)
         ;
 
-        $otpManager
+        $this->otpManager
             ->method('generateSecretKey')
             ->willReturn($key)
         ;
 
-        $otpManager
+        $this->otpManager
             ->method('getOTPClient')
             ->willReturn($this->otp)
         ;
 
-        $otpManager
+        $this->otpManager
             ->expects($this->once())
             ->method('generateFlash')
             ->with($this->equalTo($recoveryKey['secret']))
@@ -109,13 +105,13 @@ class UpdateOTPAuthKeySubscriberTest extends TestCase
             ->willReturn($object)
         ;
 
-        $UpdateOTPAuthKeySubscriber = new UpdateOTPAuthKeySubscriber($otpManager);
-        $UpdateOTPAuthKeySubscriber->preUpdate($this->arg);
+        $this->RegisterOTPAuthKeySubscriber->prePersist($this->arg);
         $this->assertEquals($key, $object->getSecretAuthKey());
     }
 
     protected function tearDown()
     {
+        $this->RegisterOTPAuthKeySubscriber = '';
         $this->arg = '';
         $this->otpManager = '';
     }

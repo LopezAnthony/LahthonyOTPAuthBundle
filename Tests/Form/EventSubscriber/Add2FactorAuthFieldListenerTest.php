@@ -6,16 +6,16 @@
  * Time: 13:01.
  */
 
-namespace LahthonyOTPAuthBundle\Tests\EventListener;
+namespace LahthonyOTPAuthBundle\Tests\Form\EventSubscriber;
 
-use LahthonyOTPAuthBundle\EventListener\Add2FactorAuthFieldListener;
+use LahthonyOTPAuthBundle\Form\EventSubscriber\Add2FactorAuthFieldSubscriber;
 use LahthonyOTPAuthBundle\Tests\TestUser;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormEvent;
 
-class Add2FactorAuthFieldListenerTest extends TestCase
+class Add2FactorAuthFieldSubscriberTest extends TestCase
 {
     /**
      * @var
@@ -62,7 +62,7 @@ class Add2FactorAuthFieldListenerTest extends TestCase
         $this->event->method('getForm')
             ->willReturn($form);
 
-        $a2f = new Add2FactorAuthFieldListener();
+        $a2f = new Add2FactorAuthFieldSubscriber();
         $a2f->preSetData($this->event);
     }
 
@@ -78,7 +78,7 @@ class Add2FactorAuthFieldListenerTest extends TestCase
         $this->event->method('getData')
             ->willReturn($user);
 
-        $a2f = new Add2FactorAuthFieldListener();
+        $a2f = new Add2FactorAuthFieldSubscriber();
         $a2f->preSetData($this->event);
     }
 
@@ -126,7 +126,7 @@ class Add2FactorAuthFieldListenerTest extends TestCase
         $this->event->method('getData')
             ->willReturn($user);
 
-        $a2f = new Add2FactorAuthFieldListener();
+        $a2f = new Add2FactorAuthFieldSubscriber();
         $a2f->hydrateOTP2AuthField($this->event);
     }
 
@@ -153,7 +153,7 @@ class Add2FactorAuthFieldListenerTest extends TestCase
             ->willReturn($user)
         ;
 
-        $a2f = new Add2FactorAuthFieldListener();
+        $a2f = new Add2FactorAuthFieldSubscriber();
         $a2f->formProcess($this->event);
     }
 
@@ -180,7 +180,7 @@ class Add2FactorAuthFieldListenerTest extends TestCase
             ->willReturn($user)
         ;
 
-        $a2f = new Add2FactorAuthFieldListener();
+        $a2f = new Add2FactorAuthFieldSubscriber();
         $a2f->formProcess($this->event);
     }
 

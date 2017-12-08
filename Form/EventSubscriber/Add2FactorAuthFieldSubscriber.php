@@ -1,13 +1,13 @@
 <?php
 
-namespace LahthonyOTPAuthBundle\EventListener;
+namespace LahthonyOTPAuthBundle\Form\EventSubscriber;
 
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class Add2FactorAuthFieldListener implements EventSubscriberInterface
+class Add2FactorAuthFieldSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {

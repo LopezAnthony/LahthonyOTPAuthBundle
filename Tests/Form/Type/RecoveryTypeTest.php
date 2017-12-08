@@ -8,7 +8,7 @@
 
 namespace LahthonyOTPAuthBundle\Tests\Form\Type;
 
-use LahthonyOTPAuthBundle\Form\RecoveryType;
+use LahthonyOTPAuthBundle\Form\Type\RecoveryType;
 use Symfony\Component\Form\Test\TypeTestCase;
 
 class RecoveryTypeTest extends TypeTestCase

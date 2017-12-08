@@ -135,7 +135,7 @@ For User Registration:
 <?php
 //src/AppBundle/Form/UserType
 
-use LahthonyOTPAuthBundle\EventListener\Add2FactorAuthFieldListener;
+use LahthonyOTPAuthBundle\Form\EventSubscriber\Add2FactorAuthFieldSubscriber;
 //...
 
 class UserType 
@@ -144,7 +144,7 @@ class UserType
     {
         $builder
             //...
-            ->addEventSubscriber(new Add2FactorAuthFieldListener())
+            ->addEventSubscriber(new Add2FactorAuthFieldSubscriber())
         ;
     }
     //...
@@ -154,7 +154,7 @@ For User Edit:
 ```php
 //src/AppBundle/Form/UserEditType
 
-use LahthonyOTPAuthBundle\EventListener\Add2FactorAuthFieldListener;
+use LahthonyOTPAuthBundle\Form\EventSubscriber\Add2FactorAuthFieldSubscriber;
 //...
 
 class UserType 
@@ -163,7 +163,7 @@ class UserType
     {
         $builder
             //...
-            ->addEventSubscriber(new Add2FactorAuthFieldListener())
+            ->addEventSubscriber(new Add2FactorAuthFieldSubscriber())
         ;
     }
     //...
