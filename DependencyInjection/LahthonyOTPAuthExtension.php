@@ -18,7 +18,8 @@ use Symfony\Component\DependencyInjection\Loader;
 class LahthonyOTPAuthExtension extends Extension
 {
     /**
-     * @Todo refactor methods less than 20 lines
+     * @param array $configs
+     * @param ContainerBuilder $container
      */
     public function load(array $configs, ContainerBuilder $container)
     {

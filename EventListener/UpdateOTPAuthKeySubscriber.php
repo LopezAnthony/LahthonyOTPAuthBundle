@@ -7,7 +7,7 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use LahthonyOTPAuthBundle\Manager\OTPManager;
 use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 
-class UpdateOTPAuthKeySubcriber implements EventSubscriber
+class UpdateOTPAuthKeySubscriber implements EventSubscriber
 {
     private $OTPManager;
 

@@ -43,11 +43,11 @@ class LoginEventListener
                     $recovery = $this->OTPManager->generateRecoveryKey($user);
                     $user->setRecoveryKey($recovery['recoveryKey']);
                     $this->manager->persist($user);
-                    $this->manager->flush();
                     $totp = $this->OTPManager->getOTPClient($user);
                     $this->OTPManager->generateFlash($recovery['secret'], $totp->getQrCodeUri());
                 }
             }
+            $this->manager->flush();
         }
     }
 }
