@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: Etudiant
  * Date: 08/12/2017
- * Time: 11:32
+ * Time: 11:32.
  */
 
 namespace LahthonyOTPAuthBundle\Tests\Manager;
-
 
 use LahthonyOTPAuthBundle\Manager\RecoveryManager;
 use LahthonyOTPAuthBundle\Tests\TestUser;
@@ -15,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class RecoveryManagerTest extends TestCase
 {
-
     /**
      * @dataProvider
      */
@@ -97,7 +95,7 @@ class RecoveryManagerTest extends TestCase
         return [
             ['6L662r78ZM'],
             ['56544343543434343'],
-            ['lhfhjqsdlqmsdlqdqsdk']
+            ['lhfhjqsdlqmsdlqdqsdk'],
         ];
     }
 }

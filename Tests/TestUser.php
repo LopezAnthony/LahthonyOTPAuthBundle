@@ -7,8 +7,6 @@ use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 
 //use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- */
 class TestUser implements OTPAuthInterface
 {
     /**
@@ -188,6 +186,7 @@ class TestUser implements OTPAuthInterface
     public function setSecretAuthKey($secretAuthKey)
     {
         $this->secretAuthKey = $secretAuthKey;
+
         return $this;
     }
 
