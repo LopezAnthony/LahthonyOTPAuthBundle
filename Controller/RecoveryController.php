@@ -2,7 +2,7 @@
 
 namespace LahthonyOTPAuthBundle\Controller;
 
-use LahthonyOTPAuthBundle\Form\RecoveryType;
+use LahthonyOTPAuthBundle\Form\Type\RecoveryType;
 use LahthonyOTPAuthBundle\Manager\RecoveryManager;
 use LahthonyOTPAuthBundle\Service\TwigMailGenerator;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
