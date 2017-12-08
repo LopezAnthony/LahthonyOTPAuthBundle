@@ -9,7 +9,6 @@ use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 use LahthonyOTPAuthBundle\Tests\TestUser;
 use OTPHP\OTP;
 use PHPUnit\Framework\TestCase;
-use Swift_Mailer;
 
 class RegisterOTPAuthKeySubscriberTest extends TestCase
 {

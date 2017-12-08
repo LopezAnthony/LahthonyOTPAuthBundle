@@ -188,7 +188,7 @@ class Add2FactorAuthFieldListenerTest extends TestCase
     {
         return [
             [1],
-            [null]
+            [null],
         ];
     }
 }

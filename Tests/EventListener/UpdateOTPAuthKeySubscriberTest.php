@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: Etudiant
  * Date: 08/12/2017
- * Time: 12:00
+ * Time: 12:00.
  */
 
 namespace LahthonyOTPAuthBundle\Tests\EventListener;
-
 
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use LahthonyOTPAuthBundle\EventListener\UpdateOTPAuthKeySubscriber;
