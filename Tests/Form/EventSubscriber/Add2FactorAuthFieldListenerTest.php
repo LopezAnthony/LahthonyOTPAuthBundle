@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormEvent;
 
-class Add2FactorAuthFieldSubscriberTest extends TestCase
+class Add2FactorAuthFieldListenerTest extends TestCase
 {
     /**
      * @var
