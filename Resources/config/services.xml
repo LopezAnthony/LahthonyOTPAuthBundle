@@ -17,10 +17,10 @@
             <argument></argument>
             <argument></argument>
         </service>
-        <service id="LahthonyOTPAuthBundle\EventListener\RegisterOTPAuthKeySubscriber">
+        <service id="LahthonyOTPAuthBundle\EventSubscriber\RegisterOTPAuthKeySubscriber">
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
-        <service id="LahthonyOTPAuthBundle\EventListener\UpdateOTPAuthKeySubscriber">
+        <service id="LahthonyOTPAuthBundle\EventSubscriber\UpdateOTPAuthKeySubscriber">
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
         <service id="LahthonyOTPAuthBundle\EventListener\LoginEventListener">
