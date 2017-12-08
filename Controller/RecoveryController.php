@@ -45,6 +45,10 @@ class RecoveryController extends Controller
         $manager = $this->getDoctrine()->getManager();
         $user = $manager->getRepository($entity)->findOneByEmail($email);
 
+        if (null === $user->getSecretAuthKey()) {
+            throw new \Exception('you don\'t have an OTP Authenticator yet');
+        }
+
         $form = $this->createForm(RecoveryType::class);
         $form->handleRequest($request);
 
