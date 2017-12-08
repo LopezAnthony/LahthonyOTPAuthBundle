@@ -7,12 +7,6 @@ use LahthonyOTPAuthBundle\Model\OTPAuthInterface;
 
 //use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * TestUser.
- *
- * @ORM\Table(name="user")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- */
 class TestUser implements OTPAuthInterface
 {
     /**
@@ -61,6 +55,8 @@ class TestUser implements OTPAuthInterface
      * @var bool
      */
     private $OTP2Auth;
+
+    private $roles = ['ROLE_USER'];
 
     /**
      * Get id.
@@ -152,12 +148,17 @@ class TestUser implements OTPAuthInterface
         return $this->email;
     }
 
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
     /**
      * @return array (Role|string)[] The user roles
      */
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        return $this->roles;
     }
 
     /**
@@ -185,6 +186,8 @@ class TestUser implements OTPAuthInterface
     public function setSecretAuthKey($secretAuthKey)
     {
         $this->secretAuthKey = $secretAuthKey;
+
+        return $this;
     }
 
     public function getSecretAuthKey()

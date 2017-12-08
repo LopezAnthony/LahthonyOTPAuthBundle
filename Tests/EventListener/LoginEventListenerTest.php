@@ -123,6 +123,30 @@ class LoginEventListenerTest extends TestCase
         $loginEventListener->onAuthenticationSuccess($this->event);
     }
 
+    public function testUserAdminRequiredAnOTPIdentification()
+    {
+        $user = $this->getUser();
+        $user
+            ->setSecretAuthKey(null)
+            ->setRoles(['ROLE_ADMIN'])
+        ;
+
+        $token = $this->createMock(TokenInterface::class);
+        $token->method('getUser')
+            ->willReturn($user);
+
+        $this->setEvent($token, null);
+
+        $this->manager
+            ->expects($this->once())
+            ->method('persist')
+            ->with($this->identicalTo($user))
+        ;
+
+        $loginEventListener = new LoginEventListener(['ROLE_ADMIN'], $this->tokenStorage, $this->otpManager, $this->manager);
+        $loginEventListener->onAuthenticationSuccess($this->event);
+    }
+
     private function setEvent($token, $request)
     {
         $this->event

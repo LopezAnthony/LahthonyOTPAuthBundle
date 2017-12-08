@@ -81,6 +81,20 @@ class OTPManagerTest extends TestCase
         $this->assertGreaterThanOrEqual(10, mb_strlen($recoveryKey['secret']));
     }
 
+    public function testAddMessageFlash()
+    {
+        $secret = 'AHD54F5PO3';
+        $qrCode = 'https://camo.githubusercontent.com/709c5e44fdc6499404e36c8bc3a41b985b44e593/687474703a2f2f63686172742e617069732e676f6f676c652e636f6d2f63686172743f6368743d7172266368733d323530783235302663686c3d6f747061757468253341253246253246746f74702532464d7925323532304269672532353230436f6d70616e79253341616c6963652532353430676f6f676c652e636f6d2533467365637265742533444a425357593344504548504b335058502532366973737565722533444d7925323532304269672532353230436f6d70616e79';
+
+        $this->flashBag
+            ->expects($this->once())
+            ->method('add')
+            ->with($this->equalTo('2factor'), $this->stringContains($secret))
+        ;
+
+        $this->OTPManager->generateFlash($secret, $qrCode);
+    }
+
     protected function tearDown()
     {
         $this->OTPManager = '';

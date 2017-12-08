@@ -73,6 +73,7 @@ class Add2FactorAuthFieldListener implements EventSubscriberInterface
         $user = $event->getData();
         if (false === $user->getOTP2Auth()) {
             $user->setSecretAuthKey(null);
+            $user->setRecoveryKey(null);
         }
         if ($user->getID() && $user->getOTP2Auth() && null === $user->getSecretAuthKey()) {
             $user->setSecretAuthKey(true);
