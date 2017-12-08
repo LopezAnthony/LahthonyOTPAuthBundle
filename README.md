@@ -5,6 +5,8 @@ LahthonyOTPAuthBundle
 [![StyleCI](https://styleci.io/repos/112461062/shield?branch=master)](https://styleci.io/repos/112461062)
 [![Coverage Status](https://coveralls.io/repos/github/LopezAnthony/LahthonyOTPAuthBundle/badge.svg?branch=master)](https://coveralls.io/github/LopezAnthony/LahthonyOTPAuthBundle?branch=master)
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d00b8477-3567-4c3f-ad27-94e6f8e1b96c/big.png)](https://insight.sensiolabs.com/projects/d00b8477-3567-4c3f-ad27-94e6f8e1b96c)
+
 About :
 --------------------------
 
